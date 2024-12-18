@@ -81,9 +81,9 @@ if __name__ == '__main__':
 
     path = walk_up_folder(os.getcwd(), 2)
     df = pandas.DataFrame({'opentrons_repo': [path]})
-    df.to_csv(walk_up_folder(os.getcwd(), 2)+'\paths.csv')
+    df.to_csv(os.path.join(walk_up_folder(os.getcwd(), 2), 'paths.csv'))
 
-    paths = pandas.read_csv(walk_up_folder(os.getcwd(), 2)+'\paths.csv')
+    paths = pandas.read_csv(os.path.join(walk_up_folder(os.getcwd(), 2), 'paths.csv'))
     paths
 
 
@@ -224,7 +224,7 @@ if __name__ == '__main__':
     if __name__== "__main__":
         main()
 
-    os.system("notepad.exe reagent_setup.txt")
+    os.system("open reagent_setup.txt")
 
     # def main():
     #     f = open('Golden_Gate_instructions.txt','w+')
@@ -282,7 +282,7 @@ if __name__ == '__main__':
     # if __name__== "__main__":
     #     main()
 
-    # os.system("notepad.exe Golden_Gate_instructions.txt")
+    # os.system("open Golden_Gate_instructions.txt")
 
     ###########################################################################################################
     #######################################################################################################
@@ -307,14 +307,14 @@ if __name__ == '__main__':
 
     #copy the temp GoldenGate.py to the new folder
     dst = '/'+date+'GoldenGate'
-    shutil.copy2(paths.loc[0].at['opentrons_repo']+'/Golden_Gate/GoldenGate_nodigests_separatepcrruns_gradient.py', paths.loc[0].at['opentrons_repo']+'/Golden_Gate/'+date+time+'_GoldenGate/')
-    shutil.copy2(paths.loc[0].at['opentrons_repo']+'/Golden_Gate/dilution_24.py', paths.loc[0].at['opentrons_repo']+'/Golden_Gate/'+date+time+'_GoldenGate/')
+    shutil.copy2(paths.loc[0].at['opentrons_repo']+'/Golden_Gate/GoldenGate_nodigests_separatepcrruns_gradient_writer.py', paths.loc[0].at['opentrons_repo']+'/Golden_Gate/'+date+time+'_GoldenGate/')
+    shutil.copy2(paths.loc[0].at['opentrons_repo']+'/Golden_Gate/dilution_24_writer.py', paths.loc[0].at['opentrons_repo']+'/Golden_Gate/'+date+time+'_GoldenGate/')
     shutil.copy2(paths.loc[0].at['opentrons_repo']+'/Update_Input.py', paths.loc[0].at['opentrons_repo']+'/Golden_Gate/'+date+time+'_GoldenGate/')
 
     #now rename the script with the date
     os.chdir(paths.loc[0].at['opentrons_repo']+'/Golden_Gate/'+date+time+'_GoldenGate')
-    os.rename('GoldenGate_nodigests_separatepcrruns_gradient.py', str(3)+'_'+date+time+'_GoldenGate.py')
-    os.rename('dilution_24.py', str(2)+'_'+date+time+'_dilution_24.py')
+    os.rename('GoldenGate_nodigests_separatepcrruns_gradient_writer.py', str(3)+'_'+date+time+'_GoldenGate.py')
+    os.rename('dilution_24_writer.py', str(2)+'_'+date+time+'_dilution_24_writer.py')
     os.rename('Update_Input.py', str(1)+'_Update_Input.py')
     os.chdir(walk_up_folder(os.getcwd(), 2))
 
@@ -953,7 +953,7 @@ if __name__ == '__main__':
     lengthd=['frogs','frogs','frogs','frogs','frogs','frogs']
 
     row = [[stkprm,stkvol,dilprm,primerconc,pcrvol,templatengs,Q5,DPNI,DPwater,cutsmart,Date,ngdesired,Combinatorial_pcr_params,Time]]
-    variables = pd.DataFrame(test,columns=['stkprm','stkvol','dilprm','primerconc','pcrvol','templatengs','Q5','DPNI','DPwater','cutsmart','Date','ngdesired','Combinatorial_pcr_params','Time'],index=range(len(temppwls)))
+    variables = pd.DataFrame(test,columns=['stkprm','stkvol','dilprm','primerconc','pcrvol','templatengs','Q5','DPNI','DPwater','cutsmart','Date','ngdesired','Combinatorial_pcr_params','Time'],index=range(len(temppwls)), dtype=object)
     variables.iloc[0]= [stkprm,stkvol,dilprm,primerconc,pcrvol,templatengs,Q5,DPNI,DPwater,cutsmart,Date,ngdesired,Combinatorial_pcr_params,Time]
     variables['template pwl number'] = temppwls
     variables['template concentrations'] = tempconcs
@@ -1234,7 +1234,7 @@ if __name__ == '__main__':
     variables.to_csv('Input.csv')
     shutil.copy2(paths.loc[0].at['opentrons_repo']+'/Golden_Gate/'+date+time+'_GoldenGate/Input.csv', paths.loc[0].at['opentrons_repo']+'/Golden_Gate/')
 
-    #os.system("notepad.exe GoldenGate_instructions.txt")
+    #os.system("open GoldenGate_instructions.txt")
 
     #variables:
     #primer dilutions:
@@ -1478,7 +1478,7 @@ if __name__ == '__main__':
     df = pandas.DataFrame(unique_templates)
 
     df = df.reset_index()
-    df = df.drop('index', 1)
+    df = df.drop('index', axis = 1)
 
     df['Template Concentration'] = ''
     df
@@ -2610,7 +2610,7 @@ if __name__ == '__main__':
         f.close()
     if __name__== "__main__":
         main()
-    os.system("notepad.exe reaction_setup.txt")
+    os.system("open reaction_setup.txt")
 
     from dilution_24_writer import *
     write_dilution()

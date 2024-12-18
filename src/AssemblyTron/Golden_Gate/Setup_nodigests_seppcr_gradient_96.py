@@ -71,9 +71,9 @@ if __name__ == '__main__':
 
     path = walk_up_folder(os.getcwd(), 2)
     df = pandas.DataFrame({'opentrons_repo': [path]})
-    df.to_csv(walk_up_folder(os.getcwd(), 2)+'\paths.csv')   
+    df.to_csv(os.path.join(walk_up_folder(os.getcwd(), 2), 'paths.csv'))
 
-    paths = pandas.read_csv(walk_up_folder(os.getcwd(), 2)+'\paths.csv')
+    paths = pandas.read_csv(os.path.join(walk_up_folder(os.getcwd(), 2), 'paths.csv'))
     paths
 
     ##########################################################################################################################
@@ -381,8 +381,8 @@ if __name__ == '__main__':
             #     else:
             #         Nextslot = Nextslot+1
         
-            names.loc[i].at['location'] = id2well[str(Nextslot)]
-            names.loc[i].at['rack'] = id2rack[str(Nextslot)]
+            names.loc[i, 'location'] = id2well[str(Nextslot)]
+            names.loc[i, 'rack'] = id2rack[str(Nextslot)]
             
             f.write('Put '+names.loc[i].at['Primary Template']+' in '+id2rack[str(Nextslot)]+' '+id2well[str(Nextslot)]+'\r\n')
             Nextslot = Nextslot+1
@@ -415,7 +415,7 @@ if __name__ == '__main__':
     if __name__== "__main__":
         main()
 
-    os.system("notepad.exe reagent_setup.txt")
+    os.system("open reagent_setup.txt")
 
     # def main():
     #     f = open('Golden_Gate_instructions.txt','w+')
@@ -473,7 +473,7 @@ if __name__ == '__main__':
     # if __name__== "__main__":
     #     main()
 
-    # os.system("notepad.exe Golden_Gate_instructions.txt")
+    # os.system("open Golden_Gate_instructions.txt")
 
     ###########################################################################################################
     #######################################################################################################
@@ -1136,7 +1136,7 @@ if __name__ == '__main__':
     lengthd=['frogs','frogs','frogs','frogs','frogs','frogs']
 
     row = [[stkprm,stkvol,dilprm,primerconc,pcrvol,templatengs,Q5,DPNI,DPwater,cutsmart,Date,ngdesired,Combinatorial_pcr_params,Time]]
-    variables = pd.DataFrame(test,columns=['stkprm','stkvol','dilprm','primerconc','pcrvol','templatengs','Q5','DPNI','DPwater','cutsmart','Date','ngdesired','Combinatorial_pcr_params','Time'],index=range(len(temppwls)))
+    variables = pd.DataFrame(test,columns=['stkprm','stkvol','dilprm','primerconc','pcrvol','templatengs','Q5','DPNI','DPwater','cutsmart','Date','ngdesired','Combinatorial_pcr_params','Time'],index=range(len(temppwls)), dtype=object)
     variables.iloc[0]= [stkprm,stkvol,dilprm,primerconc,pcrvol,templatengs,Q5,DPNI,DPwater,cutsmart,Date,ngdesired,Combinatorial_pcr_params,Time]
     variables['template pwl number'] = temppwls
     variables['template concentrations'] = tempconcs
@@ -1474,7 +1474,7 @@ if __name__ == '__main__':
     variables.to_csv('Input.csv')
     shutil.copy2(paths.loc[0].at['opentrons_repo']+'/Golden_Gate/'+date+time+'_GoldenGate/Input.csv', paths.loc[0].at['opentrons_repo']+'/Golden_Gate/')
 
-    #os.system("notepad.exe GoldenGate_instructions.txt")
+    #os.system("open GoldenGate_instructions.txt")
 
     #variables:
     #primer dilutions:
@@ -1995,7 +1995,7 @@ if __name__ == '__main__':
     df = pandas.DataFrame(unique_templates)
 
     df = df.reset_index()
-    df = df.drop('index', 1)
+    df = df.drop('index', axis = 1)
 
     df['Template Concentration'] = ''
     df
@@ -2742,7 +2742,7 @@ if __name__ == '__main__':
     if __name__== "__main__":
         main()
 
-    os.system("notepad.exe reaction_setup.txt")
+    os.system("open reaction_setup.txt")
     #don't need to shutil cause we are already in the right directory. 
     # shutil.move(paths.loc[0].at['opentrons_repo']+'/Golden_Gate/GoldenGate_instructions.txt',paths.loc[0].at['opentrons_repo']+'/Golden_Gate/'+date+'_GoldenGate/')
     # shutil.move(paths.loc[0].at['opentrons_repo']+'/Golden_Gate/GoldenGate_instructions.txt',paths.loc[0].at['opentrons_repo']+'/Golden_Gate/'+date+'_GoldenGate/')

@@ -82,13 +82,9 @@ if __name__ == '__main__':
 
     path = walk_up_folder(os.getcwd(), 2)
     df = pandas.DataFrame({'opentrons_repo': [path]})
-    df.to_csv(walk_up_folder(os.getcwd(), 2)+'\paths.csv')
+    df.to_csv(os.path.join(walk_up_folder(os.getcwd(), 2), 'paths.csv')) 
 
-    path = walk_up_folder(os.getcwd(), 2)
-    df = pandas.DataFrame({'opentrons_repo': [path]})
-    df.to_csv(walk_up_folder(os.getcwd(), 2)+'\paths.csv')  
-
-    paths = pandas.read_csv(walk_up_folder(os.getcwd(), 2)+'\paths.csv')
+    paths = pandas.read_csv(os.path.join(walk_up_folder(os.getcwd(), 2), 'paths.csv'))
     paths
 
 
@@ -2001,7 +1997,7 @@ if __name__ == '__main__':
     df = pandas.DataFrame(unique_templates)
 
     df = df.reset_index()
-    df = df.drop('index', 1)
+    df = df.drop('index', axis = 1)
 
     df['Template Concentration'] = ''
     df
