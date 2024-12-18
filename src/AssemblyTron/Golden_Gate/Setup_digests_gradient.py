@@ -224,7 +224,7 @@ if __name__ == '__main__':
     if __name__== "__main__":
         main()
 
-    os.system("notepad.exe reagent_setup.txt")
+    os.system("open reagent_setup.txt")
 
 
     # def main():
@@ -283,7 +283,7 @@ if __name__ == '__main__':
     # if __name__== "__main__":
     #     main()
 
-    # os.system("notepad.exe Golden_Gate_instructions.txt")
+    # os.system("open Golden_Gate_instructions.txt")
 
     ###########################################################################################################
     #######################################################################################################
@@ -941,7 +941,7 @@ if __name__ == '__main__':
     lengthd=['frogs','frogs','frogs','frogs','frogs','frogs']
 
     row = [[stkprm,stkvol,dilprm,primerconc,pcrvol,templatengs,Q5,DPNI,DPwater,cutsmart,Date,ngdesired,Combinatorial_pcr_params,Time,paqCI]]
-    variables = pd.DataFrame(test,columns=['stkprm','stkvol','dilprm','primerconc','pcrvol','templatengs','Q5','DPNI','DPwater','cutsmart','Date','ngdesired','Combinatorial_pcr_params','Time','paqCI'],index=range(len(temppwls)))
+    variables = pd.DataFrame(test,columns=['stkprm','stkvol','dilprm','primerconc','pcrvol','templatengs','Q5','DPNI','DPwater','cutsmart','Date','ngdesired','Combinatorial_pcr_params','Time','paqCI'],index=range(len(temppwls)), dtype=object)
     variables.iloc[0]= [stkprm,stkvol,dilprm,primerconc,pcrvol,templatengs,Q5,DPNI,DPwater,cutsmart,Date,ngdesired,Combinatorial_pcr_params,Time,paqCI]
     variables['template pwl number'] = temppwls
     variables['template concentrations'] = tempconcs
@@ -1470,7 +1470,7 @@ if __name__ == '__main__':
         current = 0
         CV = 0
 
-        num = 100000
+        num = 10
         for x in range(num):    
     
             #temps = [59.499,65.4245,67.8095,62.142,62.7575]
@@ -1528,35 +1528,45 @@ if __name__ == '__main__':
         complete = []
         print(FV)
         while i < len(FV):
+            found = False
             if L<FV[i]<U:
-                print('good')
+                print('good: condition 2 met')
                 start = str(FV[i])
                 complete.append(2)
+                found = True
                 # break
             if L2<FV[i]<U2:
-                print('good')
+                print('good: condition 10 met')
                 start = str(FV[i])
                 complete.append(10)
+                found = True
                 # break
             if L3<FV[i]<U3:
-                print('good')
+                print('good: condition 100 met')
                 start = str(FV[i])
                 complete.append(1000)
+                found = True
 
-            else:
-                redo4 = 1
-                print(redo)
+            if not found:  # If none of the conditions were met
+                print(f"Value {FV[i]} did not meet any condition")
                 complete.append(1)
+            # else:
+            #     redo4 = 1
+            #     print(redo)
+            #     complete.append(1)
             i = i + 1
         
         multiple_values = [2,10,1000]
-        print(complete)
+        print("Final 'complete' list:", complete)
         if all(value in complete for value in multiple_values):
             # 👇️ this runs
             print('All of the values are in the list')
-            break
+            redo = 0
+            # break
         else:
             print('Not all of the values are in the list')
+            redo = 1
+            break
 
 
     gradient = pandas.DataFrame(FV, columns=['temp'])
@@ -1741,7 +1751,7 @@ if __name__ == '__main__':
 
     shutil.copy2(paths.loc[0].at['opentrons_repo']+'/Golden_Gate/'+date+time+'_GoldenGate/Input.csv', paths.loc[0].at['opentrons_repo']+'/Golden_Gate/')
 
-    #os.system("notepad.exe GoldenGate_instructions.txt")
+    #os.system("open GoldenGate_instructions.txt")
 
     #variables:
     #primer dilutions:
@@ -1856,7 +1866,7 @@ if __name__ == '__main__':
     id2well['23'] = 'D6'
 
     pcr = pandas.read_csv('pcr.csv')
-    id2pcrrr = pcr.set_index('Reaction ID Number').to_dict()['tube']
+    id2pcrrr = pcr.set_index('ID Number').to_dict()['tube']
 
     #id2pcrrr = {}
     #id2pcrrr['0'] = 'B2'
@@ -1924,7 +1934,7 @@ if __name__ == '__main__':
     dig=0
     sub = 0
     for i, row in assembly.iterrows():
-        if assembly.loc[i,'Reaction Type'] == 'PCR':
+        if assembly.loc[i,'Type'] == 'PCR':
             assembly.loc[i,'pcr_frag_tube'] = id2pcrrr[i-sub]
         else:
             assembly.loc[i,'pcr_frag_tube'] = digestloc[str(dig)]
@@ -1982,7 +1992,7 @@ if __name__ == '__main__':
     pcr.columns = pcr.columns.str.replace("'","")
     pcr
 
-    pcr[['Reaction ID Number','Forward Oligo ID Number','Reverse Oligo ID Number']] = pcr[['Reaction ID Number','Forward Oligo ID Number','Reverse Oligo ID Number']].astype(int)
+    pcr[['Reaction ID Number','Forward Oligo ID Number','Reverse Oligo ID Number']] = pcr[['ID Number','ID Number.1','ID Number.2']].astype(int)
     pcr
 
     #if bumpback > 0:
@@ -2876,44 +2886,74 @@ if __name__ == '__main__':
     combinations
     #add in the looping like in IVA here so that the GG loop will work
 
-    ID_tube = assembly[['Reaction ID Number','pcr_frag_tube']]
+    ID_tube = assembly[['ID Number','pcr_frag_tube']]
+    
 
+    # Add unique suffixes during the merge to prevent duplicate column names
     if not str(combinations.iloc[0,4]) == 'nan':
-        ID_tube = ID_tube.rename(columns={'Reaction ID Number':'Assembly Piece ID Number'})
-        combinations = combinations.merge(ID_tube, on= 'Assembly Piece ID Number')
-        combs_shor = [columns for columns in combinations if columns.startswith('pcr_frag_tube')]
+        ID_tube = ID_tube.rename(columns={'ID Number': 'Assembly Piece ID Number'})
+        combinations = combinations.merge(ID_tube, on='Assembly Piece ID Number', suffixes=('', '_step1'))
+        combs_shor = [col for col in combinations.columns if col.startswith('pcr_frag_tube')]
         combs_short = combinations[combs_shor]
-        #combs_short = combinations[['pcr_frag_tube']] #,'pcr_frag_tube_y','pcr_frag_tube'
 
     if not str(combinations.iloc[0,6]) == 'nan':
-        ID_tube = ID_tube.rename(columns={'Assembly Piece ID Number':'Assembly Piece ID Number.1'})
-        combinations = combinations.merge(ID_tube, on= 'Assembly Piece ID Number.1')
-        combs_shor = [columns for columns in combinations if columns.startswith('pcr_frag_tube')]
+        ID_tube = ID_tube.rename(columns={'Assembly Piece ID Number': 'Assembly Piece ID Number.1'})
+        combinations = combinations.merge(ID_tube, on='Assembly Piece ID Number.1', suffixes=('', '_step2'))
+        combs_shor = [col for col in combinations.columns if col.startswith('pcr_frag_tube')]
         combs_short = combinations[combs_shor]
-        #combs_short = combinations[['pcr_frag_tube_x','pcr_frag_tube_y']] #,'pcr_frag_tube_y','pcr_frag_tube'
 
     if not str(combinations.iloc[0,8]) == 'nan':
-        ID_tube = ID_tube.rename(columns={'Assembly Piece ID Number.1':'Assembly Piece ID Number.2'})
-        combinations = combinations.merge(ID_tube, on= 'Assembly Piece ID Number.2')
-        combs_shor = [columns for columns in combinations if columns.startswith('pcr_frag_tube')]
+        ID_tube = ID_tube.rename(columns={'Assembly Piece ID Number.1': 'Assembly Piece ID Number.2'})
+        combinations = combinations.merge(ID_tube, on='Assembly Piece ID Number.2', suffixes=('', '_step3'))
+        combs_shor = [col for col in combinations.columns if col.startswith('pcr_frag_tube')]
         combs_short = combinations[combs_shor]
-        #combs_short = combinations[['pcr_frag_tube_x','pcr_frag_tube_y','pcr_frag_tube']] #,'pcr_frag_tube_y','pcr_frag_tube'
 
     if not str(combinations.iloc[0,10]) == 'nan':
-        ID_tube = ID_tube.rename(columns={'Assembly Piece ID Number.2':'Assembly Piece ID Number.3'})
-        combinations = combinations.merge(ID_tube, on= 'Assembly Piece ID Number.3')
-        combs_shor = [columns for columns in combinations if columns.startswith('pcr_frag_tube')]
+        ID_tube = ID_tube.rename(columns={'Assembly Piece ID Number.2': 'Assembly Piece ID Number.3'})
+        combinations = combinations.merge(ID_tube, on='Assembly Piece ID Number.3', suffixes=('', '_step4'))
+        combs_shor = [col for col in combinations.columns if col.startswith('pcr_frag_tube')]
         combs_short = combinations[combs_shor]
-        #combs_short = combinations[['pcr_frag_tube_x','pcr_frag_tube_y','pcr_frag_tube']] #,'pcr_frag_tube_y','pcr_frag_tube'
+
+    # Remove duplicate columns after all merges
     combs_short = combs_short.T.drop_duplicates().T
 
-    if not str(combinations.iloc[0,12]) == 'nan':
-        ID_tube = ID_tube.rename(columns={'Assembly Piece ID Number.3':'Assembly Piece ID Number.4'})
-        combinations = combinations.merge(ID_tube, on= 'Assembly Piece ID Number.4')
-        combs_shor = [columns for columns in combinations if columns.startswith('pcr_frag_tube')]
-        combs_short = combinations[combs_shor]
-        #combs_short = combinations[['pcr_frag_tube_x','pcr_frag_tube_y','pcr_frag_tube']] #,'pcr_frag_tube_y','pcr_frag_tube'
-    combs_short = combs_short.T.drop_duplicates().T
+
+    # if not str(combinations.iloc[0,4]) == 'nan':
+    #     ID_tube = ID_tube.rename(columns={'ID Number':'Assembly Piece ID Number'})
+    #     combinations = combinations.merge(ID_tube, on= 'Assembly Piece ID Number')
+    #     combs_shor = [columns for columns in combinations if columns.startswith('pcr_frag_tube')]
+    #     combs_short = combinations[combs_shor]
+    #     #combs_short = combinations[['pcr_frag_tube']] #,'pcr_frag_tube_y','pcr_frag_tube'
+
+    # if not str(combinations.iloc[0,6]) == 'nan':
+    #     ID_tube = ID_tube.rename(columns={'Assembly Piece ID Number':'Assembly Piece ID Number.1'})
+    #     combinations = combinations.merge(ID_tube, on= 'Assembly Piece ID Number.1')
+    #     combs_shor = [columns for columns in combinations if columns.startswith('pcr_frag_tube')]
+    #     combs_short = combinations[combs_shor]
+    #     #combs_short = combinations[['pcr_frag_tube_x','pcr_frag_tube_y']] #,'pcr_frag_tube_y','pcr_frag_tube'
+
+    # if not str(combinations.iloc[0,8]) == 'nan':
+    #     ID_tube = ID_tube.rename(columns={'Assembly Piece ID Number.1':'Assembly Piece ID Number.2'})
+    #     combinations = combinations.merge(ID_tube, on= 'Assembly Piece ID Number.2')
+    #     combs_shor = [columns for columns in combinations if columns.startswith('pcr_frag_tube')]
+    #     combs_short = combinations[combs_shor]
+    #     #combs_short = combinations[['pcr_frag_tube_x','pcr_frag_tube_y','pcr_frag_tube']] #,'pcr_frag_tube_y','pcr_frag_tube'
+
+    # if not str(combinations.iloc[0,10]) == 'nan':
+    #     ID_tube = ID_tube.rename(columns={'Assembly Piece ID Number.2':'Assembly Piece ID Number.3'})
+    #     combinations = combinations.merge(ID_tube, on= 'Assembly Piece ID Number.3')
+    #     combs_shor = [columns for columns in combinations if columns.startswith('pcr_frag_tube')]
+    #     combs_short = combinations[combs_shor]
+    #     #combs_short = combinations[['pcr_frag_tube_x','pcr_frag_tube_y','pcr_frag_tube']] #,'pcr_frag_tube_y','pcr_frag_tube'
+    # combs_short = combs_short.T.drop_duplicates().T
+
+    # if not str(combinations.iloc[0,12]) == 'nan':
+    #     ID_tube = ID_tube.rename(columns={'Assembly Piece ID Number.3':'Assembly Piece ID Number.4'})
+    #     combinations = combinations.merge(ID_tube, on= 'Assembly Piece ID Number.4')
+    #     combs_shor = [columns for columns in combinations if columns.startswith('pcr_frag_tube')]
+    #     combs_short = combinations[combs_shor]
+    #     #combs_short = combinations[['pcr_frag_tube_x','pcr_frag_tube_y','pcr_frag_tube']] #,'pcr_frag_tube_y','pcr_frag_tube'
+    # combs_short = combs_short.T.drop_duplicates().T
 
 
 
@@ -3201,7 +3241,7 @@ if __name__ == '__main__':
         f.close()
     if __name__== "__main__":
         main()
-    os.system("notepad.exe reaction_setup.txt")
+    os.system("open reaction_setup.txt")
 
     from dilution_24_digests_writer import *
     write_dilution()
