@@ -85,23 +85,16 @@ if __name__ == '__main__':
     from j5_to_csvs import *
     parse_j5()
 
-    # retcode = subprocess.call([paths.loc[0].at['r_path']+'/Rscript.exe', '--vanilla', name+'/j5_to_csvs.R'], shell=True)
-    # retcode
-
     os.chdir(goback)
     #######################################################################################################################
 
     shutil.copy2(name+'/assembly.csv', paths.loc[0].at['opentrons_repo']+'/Golden_Gate/')
     shutil.copy2(name+'/combinations.csv', paths.loc[0].at['opentrons_repo']+'/Golden_Gate/')
-    #shutil.copy2(name+'/digests.csv', paths.loc[0].at['opentrons_repo']+'/Golden_Gate/')
     shutil.copy2(name+'/oligo.csv', paths.loc[0].at['opentrons_repo']+'/Golden_Gate/')
     shutil.copy2(name+'/pcr.csv', paths.loc[0].at['opentrons_repo']+'/Golden_Gate/')
 
     oligos = pandas.read_csv('oligo.csv')
     oligos
-
-    #digests = pandas.read_csv('digests.csv')
-    #digests
 
     pcr = pandas.read_csv('pcr.csv')
     pcr.columns = pcr.columns.str.replace("'","")
@@ -119,233 +112,37 @@ if __name__ == '__main__':
 
     ######################################################################################################3
     #make instructions file
-    # e2slot = {}
-    # e2slot['0'] = 'A1'
-    # e2slot['1'] = 'A2'
-    # e2slot['2'] = 'A3'
-    # e2slot['3'] = 'A4'
-    # e2slot['4'] = 'A5'
-    # e2slot['5'] = 'A6'
-    # e2slot['6'] = 'B1'
-    # e2slot['7'] = 'B2'
-    # e2slot['8'] = 'B3'
-    # e2slot['9'] = 'B4'
-    # e2slot['10'] = 'B5'
-    # e2slot['11'] = 'B6'
-    # e2slot['12'] = 'C1'
-    # e2slot['13'] = 'C2'
-    # e2slot['14'] = 'C3'
-    # e2slot['15'] = 'C4'
-    # e2slot['16'] = 'C5'
-    # e2slot['17'] = 'C6'
-    # e2slot['18'] = 'D1'
-    # e2slot['19'] = 'D2'
-    # e2slot['20'] = 'D3'
-    # e2slot['21'] = 'D4'
-    # e2slot['22'] = 'D5'
-    # e2slot['23'] = 'D6'
 
-
-
+    # Generate id2well dictionary
     id2well = {}
-    id2well['0'] = 'A1'
-    id2well['1'] = 'A2'
-    id2well['2'] = 'A3'
-    id2well['3'] = 'A4'
-    id2well['4'] = 'A5'
-    id2well['5'] = 'A6'
-    id2well['6'] = 'A1'
-    id2well['7'] = 'A2'
-    id2well['8'] = 'A3'
-    id2well['9'] = 'A4'
-    id2well['10'] = 'A5'
-    id2well['11'] = 'A6'
-    id2well['12'] = 'B1'
-    id2well['13'] = 'B2'
-    id2well['14'] = 'B3'
-    id2well['15'] = 'B4'
-    id2well['16'] = 'B5'
-    id2well['17'] = 'B6'
-    id2well['18'] = 'B1'
-    id2well['19'] = 'B2'
-    id2well['20'] = 'B3'
-    id2well['21'] = 'B4'
-    id2well['22'] = 'B5'
-    id2well['23'] = 'B6'
-    id2well['24'] = 'C1'
-    id2well['25'] = 'C2'
-    id2well['26'] = 'C3'  ############
-    id2well['27'] = 'C4'
-    id2well['28'] = 'C5'
-    id2well['29'] = 'C6'
-    id2well['30'] = 'C1'
-    id2well['31'] = 'C2'
-    id2well['32'] = 'C3'
-    id2well['33'] = 'C4'
-    id2well['34'] = 'C5'
-    id2well['35'] = 'C6'
-    id2well['36'] = 'D1'
-    id2well['37'] = 'D2'
-    id2well['38'] = 'D3'
-    id2well['39'] = 'D4'
-    id2well['40'] = 'D5'
-    id2well['41'] = 'D6'
-    id2well['42'] = 'D1'
-    id2well['43'] = 'D2'
-    id2well['44'] = 'D3'
-    id2well['45'] = 'D4'
-    id2well['46'] = 'D5'
-    id2well['47'] = 'D6'
-    id2well['48'] = 'A1'
-    id2well['49'] = 'A2'
-    id2well['50'] = 'A3'
-    id2well['51'] = 'A4'
-    id2well['52'] = 'A5'
-    id2well['53'] = 'A6'
-    id2well['54'] = 'A1'
-    id2well['55'] = 'A2'
-    id2well['56'] = 'A3'
-    id2well['57'] = 'A4'
-    id2well['58'] = 'A5'
-    id2well['59'] = 'A6'
-    id2well['60'] = 'B1'
-    id2well['61'] = 'B2'
-    id2well['62'] = 'B3'
-    id2well['63'] = 'B4'
-    id2well['64'] = 'B5'
-    id2well['65'] = 'B6'
-    id2well['66'] = 'B1'
-    id2well['67'] = 'B2'
-    id2well['68'] = 'B3'
-    id2well['69'] = 'B4'
-    id2well['70'] = 'B5'
-    id2well['71'] = 'B6'
-    id2well['72'] = 'C1'
-    id2well['73'] = 'C2'
-    id2well['74'] = 'C3'
-    id2well['75'] = 'C4'
-    id2well['76'] = 'C5'
-    id2well['77'] = 'C6'
-    id2well['78'] = 'C1'
-    id2well['79'] = 'C2'
-    id2well['80'] = 'C3'
-    id2well['81'] = 'C4'
-    id2well['82'] = 'C5'
-    id2well['83'] = 'C6'
-    id2well['84'] = 'D1'
-    id2well['85'] = 'D2'
-    id2well['86'] = 'D3'
-    id2well['87'] = 'D4'
-    id2well['88'] = 'D5'
-    id2well['89'] = 'D6'
-    id2well['90'] = 'D1'
-    id2well['91'] = 'D2'
-    id2well['92'] = 'D3'
-    id2well['93'] = 'D4'
-    id2well['94'] = 'D5'
-    id2well['95'] = 'D6'
 
+    # Rows and columns in the rack
+    rows = ['A', 'B', 'C', 'D']
+    columns = ['1', '2', '3', '4', '5', '6']
 
+    # Total IDs and cycling through rows and columns
+    total_ids = 96  # Adjust as needed
+    wells = [f"{row}{col}" for row in rows for col in columns]
+
+    # Populate the dictionary
+    for i in range(total_ids):
+        id2well[str(i)] = wells[i % len(wells)]
+
+    # Generate id2rack dictionary
     id2rack = {}
-    id2rack['0'] = 'deckslot4'
-    id2rack['1'] = 'deckslot4'
-    id2rack['2'] = 'deckslot4'
-    id2rack['3'] = 'deckslot4'
-    id2rack['4'] = 'deckslot4'
-    id2rack['5'] = 'deckslot4'
-    id2rack['6'] = 'deckslot5'
-    id2rack['7'] = 'deckslot5'
-    id2rack['8'] = 'deckslot5'
-    id2rack['9'] = 'deckslot5'
-    id2rack['10'] = 'deckslot5'
-    id2rack['11'] = 'deckslot5'
-    id2rack['12'] = 'deckslot4'
-    id2rack['13'] = 'deckslot4'
-    id2rack['14'] = 'deckslot4'
-    id2rack['15'] = 'deckslot4'
-    id2rack['16'] = 'deckslot4'
-    id2rack['17'] = 'deckslot4'
-    id2rack['18'] = 'deckslot5'
-    id2rack['19'] = 'deckslot5'
-    id2rack['20'] = 'deckslot5'
-    id2rack['21'] = 'deckslot5'
-    id2rack['22'] = 'deckslot5'
-    id2rack['23'] = 'deckslot5'
-    id2rack['24'] = 'deckslot4'
-    id2rack['25'] = 'deckslot4'
-    id2rack['26'] = 'deckslot4'
-    id2rack['27'] = 'deckslot4'
-    id2rack['28'] = 'deckslot4'
-    id2rack['29'] = 'deckslot4'
-    id2rack['30'] = 'deckslot5'
-    id2rack['31'] = 'deckslot5'
-    id2rack['32'] = 'deckslot5'
-    id2rack['33'] = 'deckslot5'
-    id2rack['34'] = 'deckslot5'
-    id2rack['35'] = 'deckslot5'
-    id2rack['36'] = 'deckslot4'
-    id2rack['37'] = 'deckslot4'
-    id2rack['38'] = 'deckslot4'
-    id2rack['39'] = 'deckslot4'
-    id2rack['40'] = 'deckslot4'
-    id2rack['41'] = 'deckslot4'
-    id2rack['42'] = 'deckslot5'
-    id2rack['43'] = 'deckslot5'
-    id2rack['44'] = 'deckslot5'
-    id2rack['45'] = 'deckslot5'
-    id2rack['46'] = 'deckslot5'
-    id2rack['47'] = 'deckslot5'
-    id2rack['48'] = 'deckslot1'
-    id2rack['49'] = 'deckslot1'
-    id2rack['50'] = 'deckslot1'
-    id2rack['51'] = 'deckslot1'
-    id2rack['52'] = 'deckslot1'
-    id2rack['53'] = 'deckslot1'
-    id2rack['54'] = 'deckslot2'
-    id2rack['55'] = 'deckslot2'
-    id2rack['56'] = 'deckslot2'
-    id2rack['57'] = 'deckslot2'
-    id2rack['58'] = 'deckslot2'
-    id2rack['59'] = 'deckslot2'
-    id2rack['60'] = 'deckslot1'
-    id2rack['61'] = 'deckslot1'
-    id2rack['62'] = 'deckslot1'
-    id2rack['63'] = 'deckslot1'
-    id2rack['64'] = 'deckslot1'
-    id2rack['65'] = 'deckslot1'
-    id2rack['66'] = 'deckslot2'
-    id2rack['67'] = 'deckslot2'
-    id2rack['68'] = 'deckslot2'
-    id2rack['69'] = 'deckslot2'
-    id2rack['70'] = 'deckslot2'
-    id2rack['71'] = 'deckslot2'
-    id2rack['72'] = 'deckslot1'
-    id2rack['73'] = 'deckslot1'
-    id2rack['74'] = 'deckslot1'
-    id2rack['75'] = 'deckslot1'
-    id2rack['76'] = 'deckslot1'
-    id2rack['77'] = 'deckslot1'
-    id2rack['78'] = 'deckslot2'
-    id2rack['79'] = 'deckslot2'
-    id2rack['80'] = 'deckslot2'
-    id2rack['81'] = 'deckslot2'
-    id2rack['82'] = 'deckslot2'
-    id2rack['83'] = 'deckslot2'
-    id2rack['84'] = 'deckslot1'
-    id2rack['85'] = 'deckslot1'
-    id2rack['86'] = 'deckslot1'
-    id2rack['87'] = 'deckslot1'
-    id2rack['88'] = 'deckslot1'
-    id2rack['89'] = 'deckslot1'
-    id2rack['90'] = 'deckslot2'
-    id2rack['91'] = 'deckslot2'
-    id2rack['92'] = 'deckslot2'
-    id2rack['93'] = 'deckslot2'
-    id2rack['94'] = 'deckslot2'
-    id2rack['95'] = 'deckslot2'
 
+    # Define rack mappings for groups of IDs
+    rack_mapping = {
+        'deckslot4': list(range(0, 6)) + list(range(12, 18)) + list(range(24, 30)) + list(range(36, 42)),
+        'deckslot5': list(range(6, 12)) + list(range(18, 24)) + list(range(30, 36)) + list(range(42, 48)),
+        'deckslot1': list(range(48, 54)) + list(range(60, 66)) + list(range(72, 78)) + list(range(84, 90)),
+        'deckslot2': list(range(54, 60)) + list(range(66, 72)) + list(range(78, 84)) + list(range(90, 96)),
+    }
 
-        
+    # Populate the dictionary
+    for rack, ids in rack_mapping.items():
+        for id_ in ids:
+            id2rack[str(id_)] = rack
 
     def main():
         f = open('reagent_setup.txt','w+')
@@ -360,26 +157,11 @@ if __name__ == '__main__':
         
         Nextslot = len(oligos["ID Number"])
         
-        # No digest in this protocol
-        # f = open('Golden_Gate_instructions.txt','a+')
-        # for i, row in digests.iterrows():
-        #     f.write('Put '+digests.loc[i].at['Sequence Source']+' in '+id2well[str(Nextslot)]+'\r\n')
-        #     Nextslot = Nextslot+1
-        # f.close()
-        
-        #Nextslot2 = Nextslot + len(digests["Sequence Source"])-1
-        
         f = open('reagent_setup.txt','a+')
         
         f.write('NOTE: if a template is listed twice, (ie, pwl106 in B6 and C3) then skip the second position, and move remaining templates up a slot \r\n')
         f.write('This is ok because this setup sheet and df object in the script are both set up from pcr.csv, except df just takes out repeasts.  \r\n')
         for i, row in names.iterrows():
-            
-            # if i > 0:
-            #     if pcr.loc[i].at['Primary Template'] == pcr.loc[i-1].at['Primary Template']:
-            #         Nextslot = Nextslot
-            #     else:
-            #         Nextslot = Nextslot+1
         
             names.loc[i, 'location'] = id2well[str(Nextslot)]
             names.loc[i, 'rack'] = id2rack[str(Nextslot)]
@@ -404,11 +186,6 @@ if __name__ == '__main__':
         totaltubes= Nextslot + len(pcr['Primary Template'])
         
         f.write('Place 24 well tuberack in slot 2. Add '+str(totaltubes)+' empty 1.5 mL tubes to the rack in the same positions. \r\n')
-        
-        
-        
-        #numfinaltubes = len(combinations['ID Number'])
-        #f.write('Place '+str(numfinaltubes)+' tubes in row C of 24 tuberack in slot 2. Start from D6 and go to D'+str(6-numfinaltubes+1)+' \r\n')
 
         f.close()
 
@@ -416,64 +193,6 @@ if __name__ == '__main__':
         main()
 
     os.system("open reagent_setup.txt")
-
-    # def main():
-    #     f = open('Golden_Gate_instructions.txt','w+')
-    #     f.write('Place the coldtuberack in slot 1. \r\n')
-    #     f.write('put 300uL tips in slot 6 & 9, and 10uL tips in slot 5. \r\n')
-    #     f.write('put in a fresh pcr plate into thermocycler. \r\n')
-
-    #     f.write('Instructions for setting up the coldtuberack: \r\n')
-    #     for i, row in oligos.iterrows():
-    #         f.write('Put '+oligos.loc[i].at['Name']+' in '+e2slot[str(oligos.loc[i].at['ID Number'])]+'\r\n')
-    #     f.close()
-        
-    #     Nextslot = len(oligos["ID Number"])
-        
-    #     f = open('Golden_Gate_instructions.txt','a+')
-    #     for i, row in digests.iterrows():
-    #         f.write('Put '+digests.loc[i].at['Sequence Source']+' in '+e2slot[str(Nextslot)]+'\r\n')
-    #         Nextslot = Nextslot+1
-    #     f.close()
-        
-    #     Nextslot2 = Nextslot + len(digests["Sequence Source"])-1
-        
-    #     f = open('Golden_Gate_instructions.txt','a+')
-    #     for i, row in pcr.iterrows():
-    #         f.write('Put '+pcr.loc[i].at['Primary Template']+' in '+e2slot[str(Nextslot2)]+'\r\n')
-    #         Nextslot2 = Nextslot2+1
-        
-    #     f.write('Place empty tube in C4 for the T4/BSA mix \r\n')
-        
-    #     f.write('Place T4 ligase in C5 \r\n')
-
-    #     f.write('Place 100X BSA in C6 \r\n')
-        
-    #     f.write('Place T4 buffer in D2 \r\n')
-    #     f.write('Place DPNI in D3 \r\n')
-    #     f.write('Place cutsmart buffer in D4 \r\n')
-    #     f.write('Place BsaI in D5 \r\n')
-    #     f.write('Place Q5 DNA polymerase in D6 \r\n')
-        
-        
-    #     totaltubes= Nextslot2 + len(pcr['Primary Template'])
-        
-    #     f.write('Place 24 well tuberack in slot 2. Add '+str(totaltubes)+' empty 1.5 mL tubes to the rack in the same positions. \r\n')
-        
-        
-        
-    #     numfinaltubes = len(combinations['ID Number'])
-    #     f.write('Place '+str(numfinaltubes)+' tubes in row C of 24 tuberack in slot 2. Start from D6 and go to D'+str(6-numfinaltubes+1)+' \r\n')
-
-    #     f.close()
-
-
-        
-        
-    # if __name__== "__main__":
-    #     main()
-
-    # os.system("open Golden_Gate_instructions.txt")
 
     ###########################################################################################################
     #######################################################################################################
@@ -492,23 +211,7 @@ if __name__ == '__main__':
     #make the run folder of the day
     os.chdir(paths.loc[0].at['opentrons_repo']+'/Golden_Gate/')
     os.mkdir(date+time+'_GoldenGate')
-
-    #copy the temp GoldenGate.py to the new folder
-    # dst = '/'+date+time+'GoldenGate'
-    # shutil.copy2(paths.loc[0].at['opentrons_repo']+'/Golden_Gate/GoldenGate_nodigests_separatepcrruns_gradient.py', paths.loc[0].at['opentrons_repo']+'/Golden_Gate/'+date+time+'_GoldenGate/')
-    # shutil.copy2(paths.loc[0].at['opentrons_repo']+'/Golden_Gate/dilution_96.py', paths.loc[0].at['opentrons_repo']+'/Golden_Gate/'+date+time+'_GoldenGate/')
-    # shutil.copy2(paths.loc[0].at['opentrons_repo']+'/Update_Input.py', paths.loc[0].at['opentrons_repo']+'/Golden_Gate/'+date+time+'_GoldenGate/')
-
-    #now rename the script with the date
-    # os.chdir(paths.loc[0].at['opentrons_repo']+'/Golden_Gate/'+date+time+'_GoldenGate')
-    # os.rename('GoldenGate_nodigests_separatepcrruns_gradient.py', str(3)+'_'+date+time+'_GoldenGate.py')
-    # os.rename('dilution_96.py', str(2)+'_'+date+time+'_dilution_96.py')
-    # os.rename('Update_Input.py', str(1)+'_Update_Input.py')
-    # os.chdir(walk_up_folder(os.getcwd(), 2))
-
-    #shutil.move(paths.loc[0].at['opentrons_repo']+'/Golden_Gate/digests.csv',paths.loc[0].at['opentrons_repo']+'/Golden_Gate/'+date+'_GoldenGate/')
     shutil.move(paths.loc[0].at['opentrons_repo']+'/Golden_Gate/combinations.csv',paths.loc[0].at['opentrons_repo']+'/Golden_Gate/'+date+time+'_GoldenGate/')
-    # shutil.move(paths.loc[0].at['opentrons_repo']+'/Golden_Gate/pcr.csv',paths.loc[0].at['opentrons_repo']+'/Golden_Gate/'+date+'_GoldenGate/')
     shutil.move(paths.loc[0].at['opentrons_repo']+'/Golden_Gate/assembly.csv',paths.loc[0].at['opentrons_repo']+'/Golden_Gate/'+date+time+'_GoldenGate/')
     shutil.move(paths.loc[0].at['opentrons_repo']+'/Golden_Gate/oligo.csv',paths.loc[0].at['opentrons_repo']+'/Golden_Gate/'+date+time+'_GoldenGate/')
     shutil.move(paths.loc[0].at['opentrons_repo']+'/Golden_Gate/reagent_setup.txt',paths.loc[0].at['opentrons_repo']+'/Golden_Gate/'+date+time+'_GoldenGate/')
@@ -539,8 +242,6 @@ if __name__ == '__main__':
         global Time
         global ngdesired
         global Combinatorial_pcr_params
-        # global pwldigesttemp
-        # global concdigesttemp
         
         global extra1value
         global extra1name
@@ -615,8 +316,6 @@ if __name__ == '__main__':
         Time = Time_entry.get()
         ngdesired = float(ngdesired_entry.get())
         Combinatorial_pcr_params = float(Combinatorial_pcr_params_entry.get())
-        # pwldigesttemp = float(pwldigesttemp_entry.get())
-        # concdigesttemp = float(concdigesttemp_entry.get())
         
         extra1value = float(extra1value_entry.get())
         extra1name = str(extra1name_entry.get())
@@ -1130,8 +829,8 @@ if __name__ == '__main__':
         tempconcs = [conc1,conc2,conc3,conc4,conc5,conc6]
         temppwls = [temppwl1,temppwl2,temppwl3,temppwl4,temppwl5,temppwl6]
 
-    # temppwls = [temppwl1,temppwl2,temppwl3,temppwl4,temppwl5,temppwl6]
-    # tempconcs = [conc1,conc2,conc3,conc4,conc5,conc6]
+    temppwls = [temppwl1,temppwl2,temppwl3,temppwl4,temppwl5,temppwl6]
+    tempconcs = [conc1,conc2,conc3,conc4,conc5,conc6]
     test = [[0,0,0,0,0,0,0,0,0,0,0,0,0,0]]
     lengthd=['frogs','frogs','frogs','frogs','frogs','frogs']
 
@@ -1345,7 +1044,7 @@ if __name__ == '__main__':
                 break
             else:
                 print('Not all of the values are in the list')
-
+                break
 
         gradient = pandas.DataFrame(FV, columns=['temp'])
         wells = ['A1','A2','A3','A4','A5','A6','A7','A8']
@@ -2471,42 +2170,34 @@ if __name__ == '__main__':
     #add in the looping like in IVA here so that the GG loop will work
 
     ID_tube = assembly[['ID Number','pcr_frag_tube']]
+    
 
+    # Add unique suffixes during the merge to prevent duplicate column names
     if not str(combinations.iloc[0,4]) == 'nan':
-        ID_tube = ID_tube.rename(columns={'ID Number':'Assembly Piece ID Number'})
-        combinations = combinations.merge(ID_tube, on= 'Assembly Piece ID Number')
-        combs_shor = [columns for columns in combinations if columns.startswith('pcr_frag_tube')]
+        ID_tube = ID_tube.rename(columns={'ID Number': 'Assembly Piece ID Number'})
+        combinations = combinations.merge(ID_tube, on='Assembly Piece ID Number', suffixes=('', '_step1'))
+        combs_shor = [col for col in combinations.columns if col.startswith('pcr_frag_tube')]
         combs_short = combinations[combs_shor]
-        #combs_short = combinations[['pcr_frag_tube']] #,'pcr_frag_tube_y','pcr_frag_tube'
 
     if not str(combinations.iloc[0,6]) == 'nan':
-        ID_tube = ID_tube.rename(columns={'Assembly Piece ID Number':'Assembly Piece ID Number.1'})
-        combinations = combinations.merge(ID_tube, on= 'Assembly Piece ID Number.1')
-        combs_shor = [columns for columns in combinations if columns.startswith('pcr_frag_tube')]
+        ID_tube = ID_tube.rename(columns={'Assembly Piece ID Number': 'Assembly Piece ID Number.1'})
+        combinations = combinations.merge(ID_tube, on='Assembly Piece ID Number.1', suffixes=('', '_step2'))
+        combs_shor = [col for col in combinations.columns if col.startswith('pcr_frag_tube')]
         combs_short = combinations[combs_shor]
-        #combs_short = combinations[['pcr_frag_tube_x','pcr_frag_tube_y']] #,'pcr_frag_tube_y','pcr_frag_tube'
 
     if not str(combinations.iloc[0,8]) == 'nan':
-        ID_tube = ID_tube.rename(columns={'Assembly Piece ID Number.1':'Assembly Piece ID Number.2'})
-        combinations = combinations.merge(ID_tube, on= 'Assembly Piece ID Number.2')
-        combs_shor = [columns for columns in combinations if columns.startswith('pcr_frag_tube')]
+        ID_tube = ID_tube.rename(columns={'Assembly Piece ID Number.1': 'Assembly Piece ID Number.2'})
+        combinations = combinations.merge(ID_tube, on='Assembly Piece ID Number.2', suffixes=('', '_step3'))
+        combs_shor = [col for col in combinations.columns if col.startswith('pcr_frag_tube')]
         combs_short = combinations[combs_shor]
-        #combs_short = combinations[['pcr_frag_tube_x','pcr_frag_tube_y','pcr_frag_tube']] #,'pcr_frag_tube_y','pcr_frag_tube'
 
     if not str(combinations.iloc[0,10]) == 'nan':
-        ID_tube = ID_tube.rename(columns={'Assembly Piece ID Number.2':'Assembly Piece ID Number.3'})
-        combinations = combinations.merge(ID_tube, on= 'Assembly Piece ID Number.3')
-        combs_shor = [columns for columns in combinations if columns.startswith('pcr_frag_tube')]
+        ID_tube = ID_tube.rename(columns={'Assembly Piece ID Number.2': 'Assembly Piece ID Number.3'})
+        combinations = combinations.merge(ID_tube, on='Assembly Piece ID Number.3', suffixes=('', '_step4'))
+        combs_shor = [col for col in combinations.columns if col.startswith('pcr_frag_tube')]
         combs_short = combinations[combs_shor]
-        #combs_short = combinations[['pcr_frag_tube_x','pcr_frag_tube_y','pcr_frag_tube']] #,'pcr_frag_tube_y','pcr_frag_tube'
-    combs_short = combs_short.T.drop_duplicates().T
 
-    if not str(combinations.iloc[0,12]) == 'nan':
-        ID_tube = ID_tube.rename(columns={'Assembly Piece ID Number.3':'Assembly Piece ID Number.4'})
-        combinations = combinations.merge(ID_tube, on= 'Assembly Piece ID Number.4')
-        combs_shor = [columns for columns in combinations if columns.startswith('pcr_frag_tube')]
-        combs_short = combinations[combs_shor]
-        #combs_short = combinations[['pcr_frag_tube_x','pcr_frag_tube_y','pcr_frag_tube']] #,'pcr_frag_tube_y','pcr_frag_tube'
+    # Remove duplicate columns after all merges
     combs_short = combs_short.T.drop_duplicates().T
 
 
@@ -2576,6 +2267,7 @@ if __name__ == '__main__':
     for i, row in GG_dfs.iterrows():
         x = GG_dfs.loc[i].at['gg#']
         locals()[x] = combs_short[[i]]
+        # locals()[x] = locals()[x].copy()
         locals()[x].loc[:,'conc_assumed']= 60
 
         bps = assembly[['Sequence Length','pcr_frag_tube']]
