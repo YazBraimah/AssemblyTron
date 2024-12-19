@@ -314,7 +314,7 @@ if __name__ == '__main__':
     #now rename the script with the date
     os.chdir(paths.loc[0].at['opentrons_repo']+'/Golden_Gate/'+date+time+'_GoldenGate')
     os.rename('GoldenGate_nodigests_separatepcrruns_gradient_writer.py', str(3)+'_'+date+time+'_GoldenGate.py')
-    os.rename('dilution_24_writer.py', str(2)+'_'+date+time+'_dilution_24_writer.py')
+    os.rename('dilution_24_writer.py', str(2)+'_'+date+time+'_dilution_24.py')
     os.rename('Update_Input.py', str(1)+'_Update_Input.py')
     os.chdir(walk_up_folder(os.getcwd(), 2))
 

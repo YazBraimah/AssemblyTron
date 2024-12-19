@@ -2239,137 +2239,137 @@ if __name__ == '__main__':
     #so looks like this script will be limited for finding pcr conditions for just 2 construct. have to update for more
 
 
-        if len(combinations['ID Number']) == 1:
-            Lengthparams0 = params0.nlargest(1,'Length')
-            Lengthparams0['Length'] = (Lengthparams0['Length']/1000)*30
-            lengthlist = Lengthparams0['Length'].to_list()
-            finallengthlist = lengthlist
+    #     if len(combinations['ID Number']) == 1:
+    #         Lengthparams0 = params0.nlargest(1,'Length')
+    #         Lengthparams0['Length'] = (Lengthparams0['Length']/1000)*30
+    #         lengthlist = Lengthparams0['Length'].to_list()
+    #         finallengthlist = lengthlist
 
-            params_tables = {'parmx': ['params0']}
-            params_tables = pandas.DataFrame(data=params_tables)
-            params_tables
+    #         params_tables = {'parmx': ['params0']}
+    #         params_tables = pandas.DataFrame(data=params_tables)
+    #         params_tables
 
-            GG_dfs = {'gg#': ['gg1']}
-            GG_dfs = pandas.DataFrame(data=GG_dfs)
+    #         GG_dfs = {'gg#': ['gg1']}
+    #         GG_dfs = pandas.DataFrame(data=GG_dfs)
 
-        if len(combinations['ID Number']) == 2:
-            Lengthparams0 = params0.nlargest(1,'Length')
-            Lengthparams0['Length'] = (Lengthparams0['Length']/1000)*30
-            lengthlist = Lengthparams0['Length'].to_list()
+    #     if len(combinations['ID Number']) == 2:
+    #         Lengthparams0 = params0.nlargest(1,'Length')
+    #         Lengthparams0['Length'] = (Lengthparams0['Length']/1000)*30
+    #         lengthlist = Lengthparams0['Length'].to_list()
 
-            Lengthparams1 = params1.nlargest(1,'Length')
-            Lengthparams1['Length'] = (Lengthparams1['Length']/1000)*30
-            lengthlist1 = Lengthparams1['Length'].to_list()
-            finallengthlist = lengthlist + lengthlist1 
+    #         Lengthparams1 = params1.nlargest(1,'Length')
+    #         Lengthparams1['Length'] = (Lengthparams1['Length']/1000)*30
+    #         lengthlist1 = Lengthparams1['Length'].to_list()
+    #         finallengthlist = lengthlist + lengthlist1 
 
-            params_tables = {'parmx': ['params0','params1']}
-            params_tables = pandas.DataFrame(data=params_tables)
-            params_tables
+    #         params_tables = {'parmx': ['params0','params1']}
+    #         params_tables = pandas.DataFrame(data=params_tables)
+    #         params_tables
 
-            GG_dfs = {'gg#': ['gg1','gg2']}
-            GG_dfs = pandas.DataFrame(data=GG_dfs)
+    #         GG_dfs = {'gg#': ['gg1','gg2']}
+    #         GG_dfs = pandas.DataFrame(data=GG_dfs)
 
-        if len(combinations['ID Number']) == 3:
-            Lengthparams0 = params0.nlargest(1,'Length')
-            Lengthparams0['Length'] = (Lengthparams0['Length']/1000)*30
-            lengthlist = Lengthparams0['Length'].to_list()
+    #     if len(combinations['ID Number']) == 3:
+    #         Lengthparams0 = params0.nlargest(1,'Length')
+    #         Lengthparams0['Length'] = (Lengthparams0['Length']/1000)*30
+    #         lengthlist = Lengthparams0['Length'].to_list()
 
-            Lengthparams1 = params1.nlargest(1,'Length')
-            Lengthparams1['Length'] = (Lengthparams1['Length']/1000)*30
-            lengthlist1 = Lengthparams1['Length'].to_list()
+    #         Lengthparams1 = params1.nlargest(1,'Length')
+    #         Lengthparams1['Length'] = (Lengthparams1['Length']/1000)*30
+    #         lengthlist1 = Lengthparams1['Length'].to_list()
 
-            Lengthparams2 = params2.nlargest(1,'Length')
-            Lengthparams2['Length'] = (Lengthparams2['Length']/1000)*30
-            lengthlist2 = Lengthparams2['Length'].to_list()
-            finallengthlist = lengthlist + lengthlist1 +lengthlist2
+    #         Lengthparams2 = params2.nlargest(1,'Length')
+    #         Lengthparams2['Length'] = (Lengthparams2['Length']/1000)*30
+    #         lengthlist2 = Lengthparams2['Length'].to_list()
+    #         finallengthlist = lengthlist + lengthlist1 +lengthlist2
 
-            params_tables = {'parmx': ['params0','params1','params2']}
-            params_tables = pandas.DataFrame(data=params_tables)
-            params_tables
+    #         params_tables = {'parmx': ['params0','params1','params2']}
+    #         params_tables = pandas.DataFrame(data=params_tables)
+    #         params_tables
 
-            GG_dfs = {'gg#': ['gg1','gg2','gg3']}
-            GG_dfs = pandas.DataFrame(data=GG_dfs)
+    #         GG_dfs = {'gg#': ['gg1','gg2','gg3']}
+    #         GG_dfs = pandas.DataFrame(data=GG_dfs)
 
-        if len(combinations['ID Number']) == 4:
-            Lengthparams0 = params0.nlargest(1,'Length')
-            Lengthparams0['Length'] = (Lengthparams0['Length']/1000)*30
-            lengthlist = Lengthparams0['Length'].to_list()
+    #     if len(combinations['ID Number']) == 4:
+    #         Lengthparams0 = params0.nlargest(1,'Length')
+    #         Lengthparams0['Length'] = (Lengthparams0['Length']/1000)*30
+    #         lengthlist = Lengthparams0['Length'].to_list()
 
-            Lengthparams1 = params1.nlargest(1,'Length')
-            Lengthparams1['Length'] = (Lengthparams1['Length']/1000)*30
-            lengthlist1 = Lengthparams1['Length'].to_list()
+    #         Lengthparams1 = params1.nlargest(1,'Length')
+    #         Lengthparams1['Length'] = (Lengthparams1['Length']/1000)*30
+    #         lengthlist1 = Lengthparams1['Length'].to_list()
 
-            Lengthparams2 = params2.nlargest(1,'Length')
-            Lengthparams2['Length'] = (Lengthparams2['Length']/1000)*30
-            lengthlist2 = Lengthparams2['Length'].to_list()
+    #         Lengthparams2 = params2.nlargest(1,'Length')
+    #         Lengthparams2['Length'] = (Lengthparams2['Length']/1000)*30
+    #         lengthlist2 = Lengthparams2['Length'].to_list()
 
-            Lengthparams3 = params3.nlargest(1,'Length')
-            Lengthparams3['Length'] = (Lengthparams3['Length']/1000)*30
-            lengthlist3 = Lengthparams3['Length'].to_list()
-            finallengthlist = lengthlist + lengthlist1 +lengthlist2 + lengthlist3
+    #         Lengthparams3 = params3.nlargest(1,'Length')
+    #         Lengthparams3['Length'] = (Lengthparams3['Length']/1000)*30
+    #         lengthlist3 = Lengthparams3['Length'].to_list()
+    #         finallengthlist = lengthlist + lengthlist1 +lengthlist2 + lengthlist3
 
-            params_tables = {'parmx': ['params0','params1','params2','params3']}
-            params_tables = pandas.DataFrame(data=params_tables)
-            params_tables
+    #         params_tables = {'parmx': ['params0','params1','params2','params3']}
+    #         params_tables = pandas.DataFrame(data=params_tables)
+    #         params_tables
 
-            GG_dfs = {'gg#': ['gg1','gg2','gg3','gg4']}
-            GG_dfs = pandas.DataFrame(data=GG_dfs)
+    #         GG_dfs = {'gg#': ['gg1','gg2','gg3','gg4']}
+    #         GG_dfs = pandas.DataFrame(data=GG_dfs)
 
-    #Lengthparams2 = params2.nlargest(1,'Length')
-    #   Lengthparams2['Length'] = (Lengthparams2['Length']/1000)*60
-    #   lengthlist = Lengthparams2['Length'].to_list()
-    #  print(lengthlist)
+    # #Lengthparams2 = params2.nlargest(1,'Length')
+    # #   Lengthparams2['Length'] = (Lengthparams2['Length']/1000)*60
+    # #   lengthlist = Lengthparams2['Length'].to_list()
+    # #  print(lengthlist)
 
-    #Lengthparams3 = params0.nlargest(1,'Length')
-    #Lengthparams0['Length'] = (Lengthparams0['Length']/1000)*60
-    #lengthlist = Lengthparams0['Length'].to_list()
-    #print(lengthlist)
+    # #Lengthparams3 = params0.nlargest(1,'Length')
+    # #Lengthparams0['Length'] = (Lengthparams0['Length']/1000)*60
+    # #lengthlist = Lengthparams0['Length'].to_list()
+    # #print(lengthlist)
 
-    #Lengthparams0 = params0.nlargest(1,'Length')
-    #Lengthparams0['Length'] = (Lengthparams0['Length']/1000)*60
-    #lengthlist = Lengthparams0['Length'].to_list()
-    #print(lengthlist)
+    # #Lengthparams0 = params0.nlargest(1,'Length')
+    # #Lengthparams0['Length'] = (Lengthparams0['Length']/1000)*60
+    # #lengthlist = Lengthparams0['Length'].to_list()
+    # #print(lengthlist)
 
 
 
-        combinations['Extension_time_sec'] = finallengthlist
-        combinations
+    #     combinations['Extension_time_sec'] = finallengthlist
+    #     combinations
 
-        extens = combinations.nlargest(1,'Extension_time_sec')
-        extension_final = extens['Extension_time_sec']
-        extension_final
+    #     extens = combinations.nlargest(1,'Extension_time_sec')
+    #     extension_final = extens['Extension_time_sec']
+    #     extension_final
 
-    #solved the problem of not being able to loop through multiple dataframes
+    # #solved the problem of not being able to loop through multiple dataframes
 
-        annealing=[]
-        for i, row in params_tables.iterrows():
-            x = params_tables.loc[i].at['parmx']
-    #locals()[x]
-            locals()[x]['Upper_temp'] = locals()[x]['Mean Oligo Tm (3 only)'] + locals()[x]['Delta Oligo Tm (3 only)']
-            locals()[x]['Lower_temp'] = locals()[x]['Mean Oligo Tm (3 only)'] - locals()[x]['Delta Oligo Tm (3 only)']
-            HL = locals()[x].nsmallest(1,'Upper_temp').reset_index()#.values.tolist()
-            HL = HL['Upper_temp'].values.tolist()
-            LH = locals()[x].nlargest(1,'Lower_temp').reset_index()#.values.tolist()
-            LH = LH['Lower_temp'].values.tolist()    
-            if LH[0] > HL[0]:
-                annealing_temp = (LH[0]+HL[0])/2 + ((LH[0]-HL[0])/3)
-            if LH[0] < HL[0]:
-                annealing_temp = HL[0]
-            annealing.append(annealing_temp)
+    #     annealing=[]
+    #     for i, row in params_tables.iterrows():
+    #         x = params_tables.loc[i].at['parmx']
+    # #locals()[x]
+    #         locals()[x]['Upper_temp'] = locals()[x]['Mean Oligo Tm (3 only)'] + locals()[x]['Delta Oligo Tm (3 only)']
+    #         locals()[x]['Lower_temp'] = locals()[x]['Mean Oligo Tm (3 only)'] - locals()[x]['Delta Oligo Tm (3 only)']
+    #         HL = locals()[x].nsmallest(1,'Upper_temp').reset_index()#.values.tolist()
+    #         HL = HL['Upper_temp'].values.tolist()
+    #         LH = locals()[x].nlargest(1,'Lower_temp').reset_index()#.values.tolist()
+    #         LH = LH['Lower_temp'].values.tolist()    
+    #         if LH[0] > HL[0]:
+    #             annealing_temp = (LH[0]+HL[0])/2 + ((LH[0]-HL[0])/3)
+    #         if LH[0] < HL[0]:
+    #             annealing_temp = HL[0]
+    #         annealing.append(annealing_temp)
 
-    #dfff = np.array(annealing)
-        dfff = pandas.DataFrame(annealing)
-        dfff = dfff.sum(axis=1)
-        avg_annealing = dfff.mean() 
-        avg_annealing
+    # #dfff = np.array(annealing)
+    #     dfff = pandas.DataFrame(annealing)
+    #     dfff = dfff.sum(axis=1)
+    #     avg_annealing = dfff.mean() 
+    #     avg_annealing
 
-        Annealing_and_extension = pandas.DataFrame({'Annealing temp': avg_annealing,
-                    'extension time (seconds)': extension_final})
-        Annealing_and_extension = Annealing_and_extension.reset_index()
-        Annealing_and_extension = Annealing_and_extension.drop(columns = ['index'])
-        Annealing_and_extension
+    #     Annealing_and_extension = pandas.DataFrame({'Annealing temp': avg_annealing,
+    #                 'extension time (seconds)': extension_final})
+    #     Annealing_and_extension = Annealing_and_extension.reset_index()
+    #     Annealing_and_extension = Annealing_and_extension.drop(columns = ['index'])
+    #     Annealing_and_extension
 
-        Annealing_and_extension.to_csv('output_'+date+time+'_Annealing_extension.csv')
+    #     Annealing_and_extension.to_csv('output_'+date+time+'_Annealing_extension.csv')
 
     ######################separate pcrrxns####################################
     ########################################################################
