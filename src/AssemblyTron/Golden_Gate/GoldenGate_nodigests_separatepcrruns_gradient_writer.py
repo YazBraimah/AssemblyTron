@@ -58,14 +58,14 @@ def write_pcr():
             "metadata = { \r\n"
             "    'protocolName': 'Golden Gate', \r\n"
             "    'author': 'John Bryant <jbryant2@vt.edu>', \r\n"
-            "    'description': 'Protocol for performing PCR reactions and Plasmid assembly for TIR1 and AFB mutants', \r\n"
+            "    'description': 'Protocol for performing PCR reactions and Plasmid assembly', \r\n"
             "    'apiLevel': '2.10' \r\n"
             "    } \r\n"
 
             "def run(protocol: protocol_api.ProtocolContext): \r\n"
 
             "    tiprack1 = protocol.load_labware('opentrons_96_tiprack_300ul', '9') \r\n"
-            "    tiprack3 = protocol.load_labware('opentrons_96_tiprack_10ul', '5') \r\n"
+            "    tiprack3 = protocol.load_labware('opentrons_96_tiprack_20ul', '5') \r\n"
             "    watertuberack = protocol.load_labware('opentrons_10_tuberack_falcon_4x50ml_6x15ml_conical','3') \r\n"
         )
 
@@ -132,7 +132,7 @@ def write_pcr():
             for j, row in pcr.iterrows():
                 f.write(
                     "    left_pipette.pick_up_tip() \r\n"
-                    "    left_pipette.aspirate("+str(DMSO)+", pcrplate['"+str(pcr.loc[j].at['tube'])+"'], rate=2.0) \r\n"
+                    "    left_pipette.aspirate("+str(DMSO)+", pcrplate['"+str(pcr.loc[j].at['tube'])+"'], rate=2.0) \r\n" ### Missing dispense step
                     "    left_pipette.blow_out() \r\n"
                     "    left_pipette.drop_tip() \r\n"
                 )
@@ -156,13 +156,44 @@ def write_pcr():
                     "    right_pipette.drop_tip() \r\n"
                 )
             
-            f.write(
-                "    tc_mod.deactivate() \r\n"
-                "    temp_module.deactivate() \r\n"
-                "    protocol.pause('move to gradient thermocycler. set gradiet to be between "+str(gradient.loc[0].at['temp'])+" and "+str(gradient.loc[7].at['temp'])+". Extension time should be " + str(float(Length['Length'].iloc[0] / 1000 * 30)) + " seconds. Follow normal parameters for everything else. A1 is cool, A8 is hot.') \r\n"
-                "    temp_module.set_temperature(4) \r\n"
-                "    tc_mod.set_block_temperature(4) \r\n"
-            )
+            if Input_values.loc[0].at['Combinatorial_pcr_params'] == 2:
+                f.write(
+                    "    tc_mod.deactivate() \r\n"
+                    "    temp_module.deactivate() \r\n"
+                    "    protocol.pause('move to gradient thermocycler. set gradiet to be between "+str(gradient.loc[0].at['temp'])+" and "+str(gradient.loc[7].at['temp'])+". Extension time should be "+str(float((Length['Length']/1000)*30))+" seconds. Follow normal parameters for everything else. A1 is cool, A8 is hot.') \r\n"
+                    "    temp_module.set_temperature(4) \r\n"
+                    "    tc_mod.set_block_temperature(4) \r\n"
+                )
+                
+            if Input_values.loc[0].at['Combinatorial_pcr_params'] == 1:
+                f.write(
+                    "    tc_mod.close_lid() \r\n"
+                    "    tc_mod.set_lid_temperature(temperature = 105) \r\n"
+                    "    tc_mod.set_block_temperature(98, hold_time_seconds=30, block_max_volume=25) \r\n"
+                )
+                    
+                cycle = 1
+                x = 0 
+                while cycle < 35:
+
+                    f.write(
+                        "    tc_mod.set_block_temperature(98, hold_time_seconds=10, block_max_volume=25) \r\n"
+                        "    tc_mod.set_block_temperature("+str(float(low_annealing_temp.loc[0].at['Mean Oligo Tm (3 only)'])+x)+", hold_time_seconds=30, block_max_volume=25) \r\n"
+                        "    tc_mod.set_block_temperature(72, hold_time_seconds="+str(float((Length['Length'].iloc[0]/1000)*30))+", block_max_volume=25) \r\n"
+                    ) 
+                    cycle = cycle + 1
+                    x = x + delta
+                    print(cycle)
+                    print(delta)
+
+                f.write(
+                    "    tc_mod.set_block_temperature(72, hold_time_minutes=5, block_max_volume=25) \r\n"
+                    "    tc_mod.set_block_temperature(4) \r\n"
+                    "    tc_mod.set_lid_temperature(temperature = 45) \r\n"
+                    "    protocol.pause('wait until ready to dispense assemblies') \r\n"
+                    "    tc_mod.open_lid() \r\n"
+                    "    protocol.pause('just take them out manually...') \r\n"
+                )
             
     #######################################################################################################################################################
         x = 'DPNI Digest'
