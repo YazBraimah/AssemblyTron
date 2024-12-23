@@ -77,8 +77,7 @@ def write_pcr():
             "def run(protocol: protocol_api.ProtocolContext): \r\n"
 
             "    tiprack1 = protocol.load_labware('opentrons_96_tiprack_300ul', '9') \r\n"
-            "    tiprack3 = protocol.load_labware('opentrons_96_tiprack_10ul', '5') \r\n"
-
+            "    tiprack3 = protocol.load_labware('opentrons_96_tiprack_20ul', '5') \r\n"
             "    watertuberack = protocol.load_labware('opentrons_10_tuberack_falcon_4x50ml_6x15ml_conical','3') \r\n"
         )
         if rackchanger == 'Y':
