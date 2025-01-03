@@ -20,8 +20,6 @@ if __name__ == '__main__':
     from datetime import date
     from datetime import datetime
 
-
-
     now = datetime.now()
 
     time = str(now.strftime('%H%M'))
@@ -66,11 +64,6 @@ if __name__ == '__main__':
 
     mainloop()
 
-
-
-
-    #name = 'JAB-j5__20210603140838kG6Y-Synthetic-GFP-IAA'
-
     os.getcwd()
 
     def walk_up_folder(path, depth=1):
@@ -87,7 +80,6 @@ if __name__ == '__main__':
     paths = pandas.read_csv(os.path.join(walk_up_folder(os.getcwd(), 2), 'paths.csv'))
     paths
 
-
     ##########################################################################################################################
     ###Run R script via python
     shutil.copy2(paths.loc[0].at['opentrons_repo']+'/j5_to_csvs_digests.py', os.getcwd())
@@ -96,9 +88,6 @@ if __name__ == '__main__':
 
     from j5_to_csvs_digests import *
     parse_j5()
-
-    # retcode = subprocess.call([paths.loc[0].at['r_path']+'/Rscript.exe', '--vanilla', name+'/j5_to_csvs.R'], shell=True)
-    # retcode
 
     os.chdir(goback)
     #######################################################################################################################
@@ -174,8 +163,13 @@ if __name__ == '__main__':
 
         f.write('Instructions for setting up the coldtuberack: \r\n\n')
         for i, row in oligos.iterrows():
+<<<<<<< HEAD
             f.write('\tPut '+oligos.loc[i].at['Name']+' in '+e2slot[str(oligos.loc[i].at['ID Number'])]+'\r\n')
             f.write('\t\tAdd an empty tube to '+e2slot[str(oligos.loc[i].at['ID Number'])]+' on 24 well tuberack in slot 2.\r\n\n')        
+=======
+            f.write('Put '+oligos.loc[i].at['Name']+' in '+e2slot[str(oligos.loc[i].at['ID Number'])]+'\r\n')
+            f.write('Add an empty tube to '+e2slot[str(oligos.loc[i].at['ID Number'])]+' on 24 well tuberack in slot 2.\r\n\n')        
+>>>>>>> 323f9af932012c1ee114bd38057303bfe305c207
         f.close()
         
         Nextslot = len(oligos["ID Number"])
@@ -183,7 +177,11 @@ if __name__ == '__main__':
         f = open('reagent_setup.txt','a+')
         f.write('\n\nAdd these templates directly to 24 tuberack in deckslot 2: \r\n')
         for i, row in digests.iterrows():
+<<<<<<< HEAD
             f.write('\tPut '+digests.loc[i].at['Sequence Source']+' in '+e2slot[str(Nextslot)]+'\n')
+=======
+            f.write('Put '+digests.loc[i].at['Sequence Source']+' in '+e2slot[str(Nextslot)]+'\n\n')
+>>>>>>> 323f9af932012c1ee114bd38057303bfe305c207
             Nextslot = Nextslot+1
         f.close()
         
@@ -214,77 +212,13 @@ if __name__ == '__main__':
         f.write('Place cutsmart buffer in D4 \r\n')
         f.write('Place BsaI in D5 \r\n')
         f.write('Place Q5 DNA polymerase in D6 \r\n')
-    
-        
-        #numfinaltubes = len(combinations['ID Number'])
-        #f.write('Place '+str(numfinaltubes)+' tubes in row C of 24 tuberack in slot 2. Start from D6 and go to D'+str(6-numfinaltubes+1)+' \r\n')
 
         f.close()
-        
 
     if __name__== "__main__":
         main()
 
     os.system("open reagent_setup.txt")
-
-
-    # def main():
-    #     f = open('Golden_Gate_instructions.txt','w+')
-    #     f.write('Place the coldtuberack in slot 1. \r\n')
-    #     f.write('put 300uL tips in slot 6 & 9, and 10uL tips in slot 5. \r\n')
-    #     f.write('put in a fresh pcr plate into thermocycler. \r\n')
-
-    #     f.write('Instructions for setting up the coldtuberack: \r\n')
-    #     for i, row in oligos.iterrows():
-    #         f.write('Put '+oligos.loc[i].at['Name']+' in '+e2slot[str(oligos.loc[i].at['ID Number'])]+'\r\n')
-    #     f.close()
-        
-    #     Nextslot = len(oligos["ID Number"])
-        
-    #     f = open('Golden_Gate_instructions.txt','a+')
-    #     for i, row in digests.iterrows():
-    #         f.write('Put '+digests.loc[i].at['Sequence Source']+' in '+e2slot[str(Nextslot)]+'\r\n')
-    #         Nextslot = Nextslot+1
-    #     f.close()
-        
-    #     Nextslot2 = Nextslot + len(digests["Sequence Source"])-1
-        
-    #     f = open('Golden_Gate_instructions.txt','a+')
-    #     for i, row in pcr.iterrows():
-    #         f.write('Put '+pcr.loc[i].at['Primary Template']+' in '+e2slot[str(Nextslot2)]+'\r\n')
-    #         Nextslot2 = Nextslot2+1
-        
-    #     f.write('Place empty tube in C4 for the T4/BSA mix \r\n')
-        
-    #     f.write('Place T4 ligase in C5 \r\n')
-
-    #     f.write('Place 100X BSA in C6 \r\n')
-        
-    #     f.write('Place T4 buffer in D2 \r\n')
-    #     f.write('Place DPNI in D3 \r\n')
-    #     f.write('Place cutsmart buffer in D4 \r\n')
-    #     f.write('Place BsaI in D5 \r\n')
-    #     f.write('Place Q5 DNA polymerase in D6 \r\n')
-        
-        
-    #     totaltubes= Nextslot2 + len(pcr['Primary Template'])
-        
-    #     f.write('Place 24 well tuberack in slot 2. Add '+str(totaltubes)+' empty 1.5 mL tubes to the rack in the same positions. \r\n')
-        
-        
-        
-    #     numfinaltubes = len(combinations['ID Number'])
-    #     f.write('Place '+str(numfinaltubes)+' tubes in row C of 24 tuberack in slot 2. Start from D6 and go to D'+str(6-numfinaltubes+1)+' \r\n')
-
-    #     f.close()
-
-
-        
-        
-    # if __name__== "__main__":
-    #     main()
-
-    # os.system("open Golden_Gate_instructions.txt")
 
     ###########################################################################################################
     #######################################################################################################
@@ -298,34 +232,13 @@ if __name__ == '__main__':
     import os
     import shutil
 
-    #today = date.today()
-
-    #date = str(today.strftime('%Y%m%d'))
-    #date
-
     #make the run folder of the day
     os.chdir(paths.loc[0].at['opentrons_repo']+'/Golden_Gate/')
     os.mkdir(date+time+'_GoldenGate')
 
-    #copy the temp GoldenGate.py to the new folder
-    # dst = '/'+date+'GoldenGate'
-    # shutil.copy2(paths.loc[0].at['opentrons_repo']+'/Golden_Gate/GoldenGate_digests_separatepcrruns_gradient.py', paths.loc[0].at['opentrons_repo']+'/Golden_Gate/'+date+time+'_GoldenGate/')
-    # shutil.copy2(paths.loc[0].at['opentrons_repo']+'/Golden_Gate/dilution_24_digests.py', paths.loc[0].at['opentrons_repo']+'/Golden_Gate/'+date+time+'_GoldenGate/')
-    # shutil.copy2(paths.loc[0].at['opentrons_repo']+'/Update_Input.py', paths.loc[0].at['opentrons_repo']+'/Golden_Gate/'+date+time+'_GoldenGate/')
-
-    #now rename the script with the date
-    # os.chdir(paths.loc[0].at['opentrons_repo']+'/Golden_Gate/'+date+time+'_GoldenGate')
-    # os.rename('GoldenGate_digests_separatepcrruns_gradient.py', str(3)+'_'+date+time+'_GoldenGate.py')
-    # os.rename('dilution_24_digests.py', str(2)+'_'+date+time+'_dilution_24.py')
-    # os.rename('Update_Input.py', str(1)+'_Update_Input.py')
-    # os.chdir(walk_up_folder(os.getcwd(), 2))
-
-    #shutil.move(paths.loc[0].at['opentrons_repo']+'/Golden_Gate/digests.csv',paths.loc[0].at['opentrons_repo']+'/Golden_Gate/'+date+time+'_GoldenGate/')
     shutil.move(paths.loc[0].at['opentrons_repo']+'/Golden_Gate/combinations.csv',paths.loc[0].at['opentrons_repo']+'/Golden_Gate/'+date+time+'_GoldenGate/')
-    # shutil.move(paths.loc[0].at['opentrons_repo']+'/Golden_Gate/pcr.csv',paths.loc[0].at['opentrons_repo']+'/Golden_Gate/'+date+'_GoldenGate/')
     shutil.move(paths.loc[0].at['opentrons_repo']+'/Golden_Gate/assembly.csv',paths.loc[0].at['opentrons_repo']+'/Golden_Gate/'+date+time+'_GoldenGate/')
     shutil.move(paths.loc[0].at['opentrons_repo']+'/Golden_Gate/oligo.csv',paths.loc[0].at['opentrons_repo']+'/Golden_Gate/'+date+time+'_GoldenGate/')
-    #shutil.move(paths.loc[0].at['opentrons_repo']+'/Golden_Gate/GoldenGate_instructions.txt',paths.loc[0].at['opentrons_repo']+'/Golden_Gate/'+date+'_GoldenGate/')
     shutil.move(paths.loc[0].at['opentrons_repo']+'/Golden_Gate/reagent_setup.txt',paths.loc[0].at['opentrons_repo']+'/Golden_Gate/'+date+time+'_GoldenGate/')
 
 
@@ -337,7 +250,6 @@ if __name__ == '__main__':
     input_csv = tk.Tk()
     input_csv.geometry('1920x1080')
     input_csv.title('Parameters for Goldengate')
-
 
     def set_variables():
         global stkprm
@@ -902,11 +814,7 @@ if __name__ == '__main__':
         
         label_extra1 = tk.Label(text=names.loc[i].at['location']+' '+names.loc[i].at['Primary Template'],font=('Helvatical bold',14))
         label_extra1.place(relx = 0.3, rely = rel_y)
-        
-        #names.loc[i].at['pwllocation'] = tk.Entry()
-        #names.loc[i].at['pwllocation'].insert(END,names.loc[i].at['location']+' '+names.loc[i].at['Primary Template'])
-        #names.loc[i].at['pwllocation'].place(relx = 0.3, rely = rel_y, width = 95)
-
+    
         rel_y = rel_y+.05
 
     ################################################################
@@ -1433,8 +1341,6 @@ if __name__ == '__main__':
 
     ##################GRADIENT OPTIMIZER################################################################
     
-    #For now, I just want it to always calculate the gradient whether it uses it or not.
-    #if variables.loc[0].at['Combinatorial_pcr_params'] == 2:
     runnumber = 0
 
     # pcr_plustemplates
@@ -1752,61 +1658,9 @@ if __name__ == '__main__':
 
     shutil.copy2(paths.loc[0].at['opentrons_repo']+'/Golden_Gate/'+date+time+'_GoldenGate/Input.csv', paths.loc[0].at['opentrons_repo']+'/Golden_Gate/')
 
-    #os.system("open GoldenGate_instructions.txt")
-
-    #variables:
-    #primer dilutions:
-    #stkprm = 100 #concentration of the stock primer you are adding
-    #stkvol = 1 #the volume of stock primer you are adding
-    #dilprm = 2.5 #this is the concentration in uM that you want your working dilution to be
-
-    #pcr reaction
-    # need to get this from the df##Numprimers = 4 #this is how many primers go in each pcr reaction.
-    #primerconcentration = 0.1 #this is the concentration you want each primer to be in the pcr reaction
-    #pcrvol = 25 #this is the total volume of your pcr reaction 
-    #templatengs = .5 #this is the concentration of template you want in your pcr rxn in ng/uL
-
-    #template dilutions tells you what the temps need to be diluted to initially so that you can just add 1 uL of template to the pcr:
-    #need to fill in stock template values further down the script
-    #diltemp = (templatengs)*(pcrvol)/1
-
-    #total_volume = 25
-    #Q5 = total_volume - (0.5*(total_volume)) #How much Q5 to add
-    #DPNI = 1 #How much DPNI to add
-    #DPwater = 19
-    #cutsmart = 5
-
-    #goldengate param inputs
-    #ngdesired=100
-
-
-
-    #first import information from the j5 spreadsheet in order to perform appropriate steps
-    #import feather
-    #import pyarrow.feather as ft
     import pandas
     import numpy as np
     import os
-
-
-    #for this to work you need to run the python script on the same day that you make the new directory
-    #today = date.today()
-    #starter_date = str(today.strftime('%Y%m%d'))
-    #if folder was created on diff date:
-    #starter_date = 'typedatehere'
-    # pwd = str(os.getcwd())
-
-    # def walk_up_folder(path, depth=1):
-    #     _cur_depth = 1        
-    #     while _cur_depth < depth:
-    #         path = os.path.dirname(path)
-    #         _cur_depth += 1
-    #     return path   
-
-    #paths = pandas.read_csv('/data/user_storage/robotpaths.csv')
-    #paths
-
-
 
     #Input_values = pandas.read_csv('Input.csv') 
     Input_values = pandas.read_csv(paths.loc[0].at['opentrons_repo']+'/Golden_Gate/Input.csv') 
