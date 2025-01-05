@@ -163,13 +163,8 @@ if __name__ == '__main__':
 
         f.write('Instructions for setting up the coldtuberack: \r\n\n')
         for i, row in oligos.iterrows():
-<<<<<<< HEAD
             f.write('\tPut '+oligos.loc[i].at['Name']+' in '+e2slot[str(oligos.loc[i].at['ID Number'])]+'\r\n')
             f.write('\t\tAdd an empty tube to '+e2slot[str(oligos.loc[i].at['ID Number'])]+' on 24 well tuberack in slot 2.\r\n\n')        
-=======
-            f.write('Put '+oligos.loc[i].at['Name']+' in '+e2slot[str(oligos.loc[i].at['ID Number'])]+'\r\n')
-            f.write('Add an empty tube to '+e2slot[str(oligos.loc[i].at['ID Number'])]+' on 24 well tuberack in slot 2.\r\n\n')        
->>>>>>> 323f9af932012c1ee114bd38057303bfe305c207
         f.close()
         
         Nextslot = len(oligos["ID Number"])
@@ -177,11 +172,7 @@ if __name__ == '__main__':
         f = open('reagent_setup.txt','a+')
         f.write('\n\nAdd these templates directly to 24 tuberack in deckslot 2: \r\n')
         for i, row in digests.iterrows():
-<<<<<<< HEAD
             f.write('\tPut '+digests.loc[i].at['Sequence Source']+' in '+e2slot[str(Nextslot)]+'\n')
-=======
-            f.write('Put '+digests.loc[i].at['Sequence Source']+' in '+e2slot[str(Nextslot)]+'\n\n')
->>>>>>> 323f9af932012c1ee114bd38057303bfe305c207
             Nextslot = Nextslot+1
         f.close()
         
