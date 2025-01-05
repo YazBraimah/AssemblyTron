@@ -43,18 +43,18 @@ def write_dilution():
             "def run(protocol: protocol_api.ProtocolContext): \r\n"
 
             "    tiprack1 = protocol.load_labware('opentrons_96_tiprack_300ul', '9') \r\n"
-            "    tiprack3 = protocol.load_labware('opentrons_96_tiprack_10ul', '5') \r\n"
-            "    watertuberack = protocol.load_labware('opentrons_10_tuberack_falcon_4x50ml_6x15ml_conical','3') \r\n"
+            "    tiprack3 = protocol.load_labware('opentrons_96_tiprack_20ul', '5') \r\n"
+            "    watertuberack = protocol.load_labware('opentrons_10_tuberack_falcon_4x50ml_6x15ml_conical','1') \r\n"
             "    tuberack2 = protocol.load_labware('opentrons_24_tuberack_nest_1.5ml_snapcap','2') \r\n"
             "    tc_mod = protocol.load_module('Thermocycler Module') \r\n"
             "    pcrplate = tc_mod.load_labware('nest_96_wellplate_100ul_pcr_full_skirt') \r\n"
-            "    temp_module = protocol.load_module('temperature module', 1) \r\n"
+            "    temp_module = protocol.load_module('temperature module', 3) \r\n"
             "    cold_tuberack = temp_module.load_labware('opentrons_24_aluminumblock_generic_2ml_screwcap', label='Temperature-Controlled Tubes') \r\n"
             "    temp_module.set_temperature(4) \r\n"
             "    tc_mod.open_lid() \r\n"
 
-            "    right_pipette = protocol.load_instrument('p300_single','right',tip_racks=[tiprack1]) \r\n"
-            "    left_pipette = protocol.load_instrument('p10_single','left',tip_racks = [tiprack3]) \r\n"       
+            "    right_pipette = protocol.load_instrument('p300_single_gen2','right',tip_racks=[tiprack1]) \r\n"
+            "    left_pipette = protocol.load_instrument('p10_single_gen2','left',tip_racks = [tiprack3]) \r\n"       
         )
 
         x = 'Dilution'

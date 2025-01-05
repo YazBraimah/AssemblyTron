@@ -40,7 +40,7 @@ def write_dilution():
 
             "#DECK DEFINITIONS############################################################################################### \r\n"
             "    tiprack1 = protocol.load_labware('opentrons_96_tiprack_300ul', '9') \r\n"
-            "    tiprack3 = protocol.load_labware('opentrons_96_tiprack_10ul', '6') \r\n"
+            "    tiprack3 = protocol.load_labware('opentrons_96_tiprack_20ul', '6') \r\n"
             "    deckslot4 = protocol.load_labware('opentrons_24_tuberack_nest_1.5ml_snapcap','4') \r\n"
             "    deckslot5 = protocol.load_labware('opentrons_24_tuberack_nest_1.5ml_snapcap','5') \r\n"
             "    deckslot1 = protocol.load_labware('opentrons_24_tuberack_nest_1.5ml_snapcap','1') \r\n"
@@ -48,8 +48,8 @@ def write_dilution():
             "    plate96 = protocol.load_labware('opentrons_96_aluminumblock_generic_pcr_strip_200ul', '3') \r\n"
             "    watertuberack = protocol.load_labware('opentrons_10_tuberack_falcon_4x50ml_6x15ml_conical', '8') \r\n"
 
-            "    right_pipette = protocol.load_instrument('p300_single','right',tip_racks=[tiprack1]) \r\n"
-            "    left_pipette = protocol.load_instrument('p10_single','left',tip_racks = [tiprack3]) \r\n"
+            "    right_pipette = protocol.load_instrument('p300_single_gen2','right',tip_racks=[tiprack1]) \r\n"
+            "    left_pipette = protocol.load_instrument('p10_single_gen2','left',tip_racks = [tiprack3]) \r\n"
         )
 
         x = 'Dilution'
