@@ -158,19 +158,19 @@ if __name__ == '__main__':
         f.write('Date: '+str(date)+' Time: '+str(time)+' \r\n')
         f.write('Absolute Path: '+str(os.getcwd())+' \r\n\n')
 
-        f.write('Place the coldtuberack in slot 1. \r\n\n')
-        f.write('Put 300uL tips in slot 6 & 9, and 10uL tips in slot 5. \r\n\n\n')
+        f.write('Place the coldtuberack on the temperature module in slot 3. \r\n\n')
+        f.write('Put 300uL tips in slot 6 & 9, and 20uL tips in slot 5. \r\n\n\n')
 
-        f.write('Instructions for setting up the coldtuberack: \r\n\n')
+        f.write('Instructions for setting up the coldtuberack for the dilution protocol: \r\n\n')
         for i, row in oligos.iterrows():
             f.write('\tPut '+oligos.loc[i].at['Name']+' in '+e2slot[str(oligos.loc[i].at['ID Number'])]+'\r\n')
-            f.write('\t\tAdd an empty tube to '+e2slot[str(oligos.loc[i].at['ID Number'])]+' on 24 well tuberack in slot 2.\r\n\n')        
+            f.write('\t\tAdd an empty tube to '+e2slot[str(oligos.loc[i].at['ID Number'])]+' on 24 well tuberack in slot 2.\r\n')        
         f.close()
         
         Nextslot = len(oligos["ID Number"])
         
         f = open('reagent_setup.txt','a+')
-        f.write('\n\nAdd these templates directly to 24 tuberack in deckslot 2: \r\n')
+        f.write('\nAdd these templates directly to 24 tuberack in deckslot 2: \r\n')
         for i, row in digests.iterrows():
             f.write('\tPut '+digests.loc[i].at['Sequence Source']+' in '+e2slot[str(Nextslot)]+'\n')
             Nextslot = Nextslot+1
@@ -180,8 +180,7 @@ if __name__ == '__main__':
         print(names)
         f = open('reagent_setup.txt','a+')
 
-        f.write('\n\t\tNOTE: if a template is listed twice, (ie, pwl106 in B6 and C3) then skip the second position, and move remaining templates up a slot \r\n')
-        f.write('This is ok because this setup sheet and df object in the script are both set up from pcr.csv, except df just takes out repeasts. \r\n\n\n')
+        f.write('\n\t\tNOTE: if a template is listed twice, (ie, pwl106 in B6 and C3) then skip the second position, and move remaining templates up a slot This is ok because this setup sheet and df object in the script are both set up from pcr.csv, except df just takes out repeasts. \r\n\n\n'')
         f.write('These go in the cold tuberack again.  \r\n')
         for i, row in names.iterrows():
             if i > 0:
@@ -192,12 +191,13 @@ if __name__ == '__main__':
             f.write('\tPut '+names.loc[i].at['Primary Template']+' in '+e2slot[str(Nextslot2)]+'\r\n')
             f.write('\t\tAdd an empty tube to '+e2slot[str(Nextslot2)]+'on 24 well tuberack in slot 2.\r\n\n')
         
+
+        f.write('Instructions for setting up the coldtuberack for the Golden Gate protocol: \r\n\n')
         f.write('Place empty tube in C4 for the T4/BSA mix \r\n\n')
-        
         f.write('Place T4 ligase in C5 \r\n\n')
         f.write('Place DMSO in D6 of tuberack2 (since it needs to be at room temp) \r\n\n')
         f.write('Place 100X BSA in C6 \r\n\n')
-        f.write('Place paqCI activator in D1 of cold tuberack (if needed) \r\n')
+        # f.write('Place paqCI activator in D1 of cold tuberack (if needed) \r\n')
         f.write('Place T4 buffer in D2 \r\n')
         f.write('Place DPNI in D3 \r\n')
         f.write('Place cutsmart buffer in D4 \r\n')
