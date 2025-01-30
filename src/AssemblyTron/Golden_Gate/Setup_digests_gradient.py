@@ -180,7 +180,7 @@ if __name__ == '__main__':
         print(names)
         f = open('reagent_setup.txt','a+')
 
-        f.write('\n\t\tNOTE: if a template is listed twice, (ie, pwl106 in B6 and C3) then skip the second position, and move remaining templates up a slot This is ok because this setup sheet and df object in the script are both set up from pcr.csv, except df just takes out repeasts. \r\n\n\n'')
+        f.write('\n\t\tNOTE: if a template is listed twice, (ie, pwl106 in B6 and C3) then skip the second position, and move remaining templates up a slot This is ok because this setup sheet and df object in the script are both set up from pcr.csv, except df just takes out repeasts. \r\n\n\n')
         f.write('These go in the cold tuberack again.  \r\n')
         for i, row in names.iterrows():
             if i > 0:

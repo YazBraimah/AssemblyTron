@@ -83,7 +83,7 @@ def write_pcr():
             "    tc_mod = protocol.load_module('thermocyclerModuleV2') \r\n"
             "    pcrplate = tc_mod.load_labware('nest_96_wellplate_100ul_pcr_full_skirt') \r\n"
             "    temp_module = protocol.load_module('temperature module', 3) \r\n"
-            "    cold_tuberack = temp_module.load_labware('opentrons_24_aluminumblock_generic_2ml_screwcap', label='Temperature-Controlled Tubes') \r\n"
+            "    cold_tuberack = temp_module.load_labware('opentrons_24_aluminumblock_generic_1.5ml_screwcap', label='Temperature-Controlled Tubes') \r\n"
             "    temp_module.set_temperature(4) \r\n"
             "    tc_mod.open_lid() \r\n"
 
