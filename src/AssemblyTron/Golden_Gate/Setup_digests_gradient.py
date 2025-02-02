@@ -215,7 +215,7 @@ if __name__ == '__main__':
     if __name__== "__main__":
         main()
 
-    os.system("open reagent_setup.txt")
+    # os.system("open reagent_setup.txt")
 
     ###########################################################################################################
     #######################################################################################################
@@ -652,7 +652,7 @@ if __name__ == '__main__':
     templatengs_entry.place(relx=0.2,rely=0.175,width=35)
 
     Q5_entry = tk.Entry()
-    Q5_entry.insert(END, '12')
+    Q5_entry.insert(END, '12.5')
     Q5_entry.place(relx=0.2,rely=0.2,width=35)
 
     DPNI_entry = tk.Entry()
@@ -672,7 +672,7 @@ if __name__ == '__main__':
     Date_entry.place(relx=0.2,rely=0.3,width=55)
 
     ngdesired_entry = tk.Entry()
-    ngdesired_entry.insert(END, '100')
+    ngdesired_entry.insert(END, '50')
     ngdesired_entry.place(relx=0.2,rely=0.325,width=35)
 
     Combinatorial_pcr_params_entry = tk.Entry()
@@ -3013,7 +3013,7 @@ if __name__ == '__main__':
         for i, row in GG_dfs.iterrows():
             f.write('Put a 100 uL PCR tube in '+ggdf2spot[str(GG_dfs.loc[i].at['gg#'])]+'\r\n')
 
-        f.write('Fragment dilution tubes go on the PCR block at deckslot 4 in same configuration as tubes in thermocycler : \r\n')
+        f.write('Fragment dilution tubes go on the PCR block at deckslot 4 in same configuration as tubes in thermocycler.\r\n')
 
         # if len(combinations['ID Number']) == 1:
         #     if gg1.loc[0].at['final amount to add'] > 1:
@@ -3095,6 +3095,7 @@ if __name__ == '__main__':
         main()
 
     os.system("open reaction_setup.txt")
+    os.system("open reagent_setup.txt")
 
     from dilution_24_digests_writer import *
     write_dilution()
