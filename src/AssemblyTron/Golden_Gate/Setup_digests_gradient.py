@@ -192,10 +192,10 @@ if __name__ == '__main__':
             f.write('\tPut '+names.loc[i].at['Primary Template']+' in '+e2slot[str(Nextslot2)]+'\r\n')
             f.write('\t\tAdd an empty tube to '+e2slot[str(Nextslot2)]+'on 24 well tuberack in slot 2.\r\n\n')
         
-        f.write('\n\t||---------------------------------------------------------------------------------|| \r\n')
-        f.write('\n\t||---------------------------------------------------------------------------------|| \r\n')
-        f.write('\n\t||---------------------------------------------------------------------------------|| \r\n')
-        f.write('\n\t||---------------------------------------------------------------------------------|| \r\n\n\n\n')
+        f.write('\n||---------------------------------------------------------------------------------|| \r\n')
+        f.write('\n||---------------------------------------------------------------------------------|| \r\n')
+        f.write('\n||---------------------------------------------------------------------------------|| \r\n')
+        f.write('\n||---------------------------------------------------------------------------------|| \r\n\n\n\n')
 
         f.write('GOLDEN GATE SETUP: \r\n\n')
         f.write('Instructions for setting up the coldtuberack for the Golden Gate protocol: \r\n\n')
@@ -1666,7 +1666,7 @@ if __name__ == '__main__':
     # Date
     Q5 = (0.5*Input_values.loc[0].at['pcrvol'])
     diltemp = (Input_values.loc[0].at['templatengs'])*(Input_values.loc[0].at['pcrvol'])/1
-    DMSO = (0.03*Input_values.loc[0].at['pcrvol'])
+    # DMSO = (0.03*Input_values.loc[0].at['pcrvol'])
 
     ###############################################################################################################################################
     #oligos
@@ -1941,7 +1941,7 @@ if __name__ == '__main__':
     pcr_plustemplates = pcr_plustemplates.merge(wellinfo, on= 'Reverse Oligo ID Number')
     pcr_plustemplates
 
-    pcr_plustemplates['total_water_toadd'] = Input_values.loc[0].at['pcrvol']-Q5-DMSO-1-1-1
+    pcr_plustemplates['total_water_toadd'] = Input_values.loc[0].at['pcrvol']-Q5-1-1-1 # deleted DMSO volume
     pcr_plustemplates
 
     #pcrstart  = len(digests['well'])

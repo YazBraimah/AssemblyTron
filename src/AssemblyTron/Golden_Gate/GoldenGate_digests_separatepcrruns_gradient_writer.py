@@ -25,7 +25,7 @@ def write_pcr():
 
         Q5 = (0.5*Input_values.loc[0].at['pcrvol'])
         diltemp = (Input_values.loc[0].at['templatengs'])*(Input_values.loc[0].at['pcrvol'])/1
-        DMSO = (0.03*Input_values.loc[0].at['pcrvol'])
+        # DMSO = (0.03*Input_values.loc[0].at['pcrvol'])
 
         #os.chdir(Date+Time+'_GoldenGate')
         oligos = pandas.read_csv('oligo.csv')
@@ -143,15 +143,15 @@ def write_pcr():
                 )
 
             #Add DMSO
-            for j, row in pcr.iterrows():
-                f.write(
-                    "    protocol.comment('Adding DMSO to "+str(pcr.loc[j].at['Primary Template'])+"') \r\n"
-                    "    p20_pipette.pick_up_tip() \r\n"
-                    "    p20_pipette.aspirate("+str(DMSO)+", cold_tuberack['D1'], rate=2.0) \r\n"
-                    "    p20_pipette.dispense("+str(DMSO)+", pcrplate['"+str(pcr.loc[j].at['tube'])+"'], rate=2.0) \r\n"
-                    "    p20_pipette.blow_out() \r\n"
-                    "    p20_pipette.drop_tip() \r\n"
-                )
+            # for j, row in pcr.iterrows():
+            #     f.write(
+            #         "    protocol.comment('Adding DMSO to "+str(pcr.loc[j].at['Primary Template'])+"') \r\n"
+            #         "    p20_pipette.pick_up_tip() \r\n"
+            #         "    p20_pipette.aspirate("+str(DMSO)+", cold_tuberack['D1'], rate=2.0) \r\n"
+            #         "    p20_pipette.dispense("+str(DMSO)+", pcrplate['"+str(pcr.loc[j].at['tube'])+"'], rate=2.0) \r\n"
+            #         "    p20_pipette.blow_out() \r\n"
+            #         "    p20_pipette.drop_tip() \r\n"
+            #     )
 
             #add Q5 MM to each reaction
             for j, row in pcr.iterrows():

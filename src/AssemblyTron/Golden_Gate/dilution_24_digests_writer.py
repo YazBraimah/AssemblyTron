@@ -167,7 +167,7 @@ def write_dilution():
             #         "    p300_pipette.drop_tip() \r\n"
             #     )
             f.write(
-                "    protocol.pause('Take all stock primers and templates out. Add Q5 MM to D6, NEBridge to D5, rCutsmart to D4, DpnI to D3, T4 buffer to D2, and DMSO to D1') \r\n"
+                "    protocol.pause('Take all stock primers and templates out. Add Q5 MM to D6, NEBridge to D5, rCutsmart to D4, DpnI to D3, T4 buffer to D2') \r\n"
             )
 
         f.close()
