@@ -160,19 +160,19 @@ if __name__ == '__main__':
 
         f.write('Place the coldtuberack on the temperature module in slot 3. \r\n\n')
         f.write('Put 300uL tips in slot 6 & 9, and 20uL tips in slot 5. \r\n\n\n')
-
-        f.write('Instructions for setting up the coldtuberack for the dilution protocol: \r\n\n')
+        f.write('DILUTION SETUP: \r\n\n')
+        f.write('Instructions for setting up the coldtuberack (slot 3) and tuberack (slot 2) for the dilution protocol: \r\n\n')
         for i, row in oligos.iterrows():
             f.write('\tPut '+oligos.loc[i].at['Name']+' in '+e2slot[str(oligos.loc[i].at['ID Number'])]+'\r\n')
-            f.write('\t\tAdd an empty tube to '+e2slot[str(oligos.loc[i].at['ID Number'])]+' on 24 well tuberack in slot 2.\r\n')        
+            f.write('\t\tAdd an empty tube to '+e2slot[str(oligos.loc[i].at['ID Number'])]+' on 24 well tuberack in slot 2.\r\n\n')        
         f.close()
         
         Nextslot = len(oligos["ID Number"])
         
         f = open('reagent_setup.txt','a+')
-        f.write('\nAdd these templates directly to 24 tuberack in deckslot 2: \r\n')
+        f.write('\nAdd these entry vector templates directly to 24 tuberack in deckslot 2: \r\n')
         for i, row in digests.iterrows():
-            f.write('\tPut '+digests.loc[i].at['Sequence Source']+' in '+e2slot[str(Nextslot)]+'\n')
+            f.write('\tPut '+digests.loc[i].at['Sequence Source']+' in '+e2slot[str(Nextslot)]+'\n\n\n')
             Nextslot = Nextslot+1
         f.close()
         
@@ -180,7 +180,8 @@ if __name__ == '__main__':
         print(names)
         f = open('reagent_setup.txt','a+')
 
-        f.write('\n\t\tNOTE: if a template is listed twice, (ie, pwl106 in B6 and C3) then skip the second position, and move remaining templates up a slot This is ok because this setup sheet and df object in the script are both set up from pcr.csv, except df just takes out repeasts. \r\n\n\n')
+        # f.write('\n\t\tNOTE: if a template is listed twice, (ie, pwl106 in B6 and C3) then skip the second position, and move remaining templates up a slot This is ok because this setup sheet and df object in the script are both set up from pcr.csv, except df just takes out repeasts. \r\n\n\n')
+        
         f.write('These go in the cold tuberack again.  \r\n')
         for i, row in names.iterrows():
             if i > 0:
@@ -191,18 +192,23 @@ if __name__ == '__main__':
             f.write('\tPut '+names.loc[i].at['Primary Template']+' in '+e2slot[str(Nextslot2)]+'\r\n')
             f.write('\t\tAdd an empty tube to '+e2slot[str(Nextslot2)]+'on 24 well tuberack in slot 2.\r\n\n')
         
+        f.write('\n\t||---------------------------------------------------------------------------------|| \r\n')
+        f.write('\n\t||---------------------------------------------------------------------------------|| \r\n')
+        f.write('\n\t||---------------------------------------------------------------------------------|| \r\n')
+        f.write('\n\t||---------------------------------------------------------------------------------|| \r\n\n\n\n')
 
+        f.write('GOLDEN GATE SETUP: \r\n\n')
         f.write('Instructions for setting up the coldtuberack for the Golden Gate protocol: \r\n\n')
-        f.write('Place empty tube in C4 for the T4/BSA mix \r\n\n')
-        f.write('Place T4 ligase in C5 \r\n\n')
-        f.write('Place DMSO in D6 of tuberack2 (since it needs to be at room temp) \r\n\n')
-        f.write('Place 100X BSA in C6 \r\n\n')
+        # f.write('Place empty tube in C4 for the T4/BSA mix \r\n\n')
+        f.write('\tPlace Q5 Master Mix in D6 \r\n\n')
+        f.write('\tPlace NEBridge enzyme in D5 \r\n\n')
+        f.write('\tPlace rCutsmart buffer in D4 \r\n\n')
+        f.write('\tPlace DpnI in D3 \r\n\n')
+        f.write('\tPlace T4 buffer in D2 \r\n\n')
+        # f.write('Place DMSO in D1 of tuberack2 (since it needs to be at room temp) \r\n\n')
+        # f.write('Place rAlbumin in C1 \r\n\n')
         # f.write('Place paqCI activator in D1 of cold tuberack (if needed) \r\n')
-        f.write('Place T4 buffer in D2 \r\n')
-        f.write('Place DPNI in D3 \r\n')
-        f.write('Place cutsmart buffer in D4 \r\n')
-        f.write('Place BsaI in D5 \r\n')
-        f.write('Place Q5 DNA polymerase in D6 \r\n')
+        
 
         f.close()
 
@@ -259,10 +265,10 @@ if __name__ == '__main__':
         global Time
         global paqCI
         
-        global extra1value
-        global extra1name
-        global extra2value
-        global extra2name
+        # global extra1value
+        # global extra1name
+        # global extra2value
+        # global extra2name
         
         if len(pandas.unique(names['Primary Template'])) == 1:
             global temppwl1
@@ -334,10 +340,10 @@ if __name__ == '__main__':
         Time = Time_entry.get()
         paqCI = paqCI_entry.get()
         
-        extra1value = float(extra1value_entry.get())
-        extra1name = str(extra1name_entry.get())
-        extra2value = float(extra2value_entry.get())
-        extra2name = str(extra2name_entry.get())
+        # extra1value = float(extra1value_entry.get())
+        # extra1name = str(extra1name_entry.get())
+        # extra2value = float(extra2value_entry.get())
+        # extra2name = str(extra2name_entry.get())
 
         if len(pandas.unique(names['Primary Template'])) == 1:
             if temppwl1_entry.get() == '':
@@ -580,7 +586,7 @@ if __name__ == '__main__':
     label_templatengs = tk.Label(text='Conc of template in PCR - ng/uL',font=('Helvatical bold',14))
     label_templatengs.place(relx=0,rely=0.17)
 
-    label_Q5 = tk.Label(text='Polymerase mastermix to add - uL',font=('Helvatical bold',14))
+    label_Q5 = tk.Label(text='Q5 Polymerase mastermix to add - uL',font=('Helvatical bold',14))
     label_Q5.place(relx=0,rely=0.2)
 
     label_DNP1 = tk.Label(text='Dpn1 to add - uL',font=('Helvatical bold',14))
@@ -607,11 +613,11 @@ if __name__ == '__main__':
     label_paqCI = tk.Label(text='Using paqCI? 1=N 2=Y',font=('Helvatical bold',14))
     label_paqCI.place(relx=0,rely=0.4)
 
-    label_extra1 = tk.Label(text='extra1',font=('Helvatical bold',14))
-    label_extra1.place(relx=0,rely=0.45)
+    # label_extra1 = tk.Label(text='extra1',font=('Helvatical bold',14))
+    # label_extra1.place(relx=0,rely=0.45)
 
-    label_extra2 = tk.Label(text='extra2',font=('Helvatical bold',14))
-    label_extra2.place(relx=0,rely=0.475)
+    # label_extra2 = tk.Label(text='extra2',font=('Helvatical bold',14))
+    # label_extra2.place(relx=0,rely=0.475)
 
     label2 = tk.Label(text="Template - Well & Name",font=('Helvatical bold',12))
     label2.place(relx=0.3,rely=0)
@@ -626,15 +632,15 @@ if __name__ == '__main__':
     stkprm_entry.place(relx=0.2,rely=0.05,width=35)
 
     stkvol_entry = tk.Entry()
-    stkvol_entry.insert(END, '1')
+    stkvol_entry.insert(END, '5')
     stkvol_entry.place(relx=0.2,rely=0.075,width=35)
 
     dilprm_entry = tk.Entry()
-    dilprm_entry.insert(END, '2.5')
+    dilprm_entry.insert(END, '10')
     dilprm_entry.place(relx=0.2,rely=0.1,width=35)
 
     primerconc_entry = tk.Entry()
-    primerconc_entry.insert(END, '0.1')
+    primerconc_entry.insert(END, '0.5')
     primerconc_entry.place(relx=0.2,rely=0.125,width=35)
 
     pcrvol_entry = tk.Entry()
@@ -642,11 +648,11 @@ if __name__ == '__main__':
     pcrvol_entry.place(relx=0.2,rely=0.15,width=35)
 
     templatengs_entry = tk.Entry()
-    templatengs_entry.insert(END, '0.02')
+    templatengs_entry.insert(END, '5')
     templatengs_entry.place(relx=0.2,rely=0.175,width=35)
 
     Q5_entry = tk.Entry()
-    Q5_entry.insert(END, '0')
+    Q5_entry.insert(END, '12')
     Q5_entry.place(relx=0.2,rely=0.2,width=35)
 
     DPNI_entry = tk.Entry()
@@ -681,21 +687,21 @@ if __name__ == '__main__':
     paqCI_entry.insert(END, '1')
     paqCI_entry.place(relx=0.2,rely=0.4,width=55)
 
-    extra1name_entry = tk.Entry()
-    extra1name_entry.insert(END, 'variable')
-    extra1name_entry.place(relx=0.2,rely=0.45,width=50)
+    # extra1name_entry = tk.Entry()
+    # extra1name_entry.insert(END, 'variable')
+    # extra1name_entry.place(relx=0.2,rely=0.45,width=50)
 
-    extra2name_entry = tk.Entry()
-    extra2name_entry.insert(END, 'variable')
-    extra2name_entry.place(relx=0.2,rely=0.475,width=50)
+    # extra2name_entry = tk.Entry()
+    # extra2name_entry.insert(END, 'variable')
+    # extra2name_entry.place(relx=0.2,rely=0.475,width=50)
 
-    extra1value_entry = tk.Entry()
-    extra1value_entry.insert(END, '0')
-    extra1value_entry.place(relx=0.25,rely=0.45,width=35)
+    # extra1value_entry = tk.Entry()
+    # extra1value_entry.insert(END, '0')
+    # extra1value_entry.place(relx=0.25,rely=0.45,width=35)
 
-    extra2value_entry = tk.Entry()
-    extra2value_entry.insert(END, '0')
-    extra2value_entry.place(relx=0.25,rely=0.475,width=35)
+    # extra2value_entry = tk.Entry()
+    # extra2value_entry.insert(END, '0')
+    # extra2value_entry.place(relx=0.25,rely=0.475,width=35)
 
     ########################################################################################
     #entries for pwl number and concentration
@@ -846,13 +852,13 @@ if __name__ == '__main__':
     variables['template pwl number'] = temppwls
     variables['template concentrations'] = tempconcs
 
-    if extra1value != 0: 
-        variables[extra1name] = ''
-        variables.loc[0,extra1name] = extra1value
+    # if extra1value != 0: 
+    #     variables[extra1name] = ''
+    #     variables.loc[0,extra1name] = extra1value
 
-    if extra2value != 0:
-        variables[extra2name] = ''
-        variables.loc[0,extra2name] = extra2value
+    # if extra2value != 0:
+    #     variables[extra2name] = ''
+    #     variables.loc[0,extra2name] = extra2value
 
     variables
 
@@ -1118,7 +1124,7 @@ if __name__ == '__main__':
     if len(pandas.unique(digestnames['Sequence Source'])) == 1:
         temppwl1_entry = tk.Entry()
         conc1_entry= tk.Entry()
-        conc1_entry.insert(END, '0')
+        conc1_entry.insert(END, '75')
         conc1_entry.place(relx=0.6,rely=0.3,width = 35)
         
         digestnames['pwllocation'] = [temppwl1_entry]
@@ -1128,10 +1134,10 @@ if __name__ == '__main__':
         temppwl1_entry = tk.Entry()
         temppwl2_entry = tk.Entry()
         conc1_entry= tk.Entry()
-        conc1_entry.insert(END, '0')
+        conc1_entry.insert(END, '75')
         conc1_entry.place(relx=0.6,rely=0.3,width = 35)
         conc2_entry= tk.Entry()
-        conc2_entry.insert(END, '0')
+        conc2_entry.insert(END, '75')
         conc2_entry.place(relx=0.6,rely=0.35,width = 35)
         
         digestnames['pwllocation'] = [temppwl1_entry, temppwl2_entry]
@@ -1142,13 +1148,13 @@ if __name__ == '__main__':
         temppwl2_entry = tk.Entry()
         temppwl3_entry = tk.Entry()
         conc1_entry= tk.Entry()
-        conc1_entry.insert(END, '0')
+        conc1_entry.insert(END, '75')
         conc1_entry.place(relx=0.6,rely=0.3,width = 35)
         conc2_entry = tk.Entry()
-        conc2_entry.insert(END, '0')
+        conc2_entry.insert(END, '75')
         conc2_entry.place(relx=0.6,rely=0.35,width = 35)
         conc3_entry = tk.Entry()
-        conc3_entry.insert(END, '0')
+        conc3_entry.insert(END, '75')
         conc3_entry.place(relx=0.6,rely=0.4,width = 35)
         
         digestnames['pwllocation'] = [temppwl1_entry, temppwl2_entry, temppwl3_entry]
@@ -1160,16 +1166,16 @@ if __name__ == '__main__':
         temppwl3_entry = tk.Entry()
         temppwl4_entry = tk.Entry()
         conc1_entry= tk.Entry()
-        conc1_entry.insert(END, '0')
+        conc1_entry.insert(END, '75')
         conc1_entry.place(relx=0.6,rely=0.3,width = 35)
         conc2_entry = tk.Entry()
-        conc2_entry.insert(END, '0')
+        conc2_entry.insert(END, '75')
         conc2_entry.place(relx=0.6,rely=0.35,width = 35)
         conc3_entry = tk.Entry()
-        conc3_entry.insert(END, '0')
+        conc3_entry.insert(END, '75')
         conc3_entry.place(relx=0.6,rely=0.4,width = 35)
         conc4_entry = tk.Entry()
-        conc4_entry.insert(END, '0')
+        conc4_entry.insert(END, '75')
         conc4_entry.place(relx=0.6,rely=0.45,width = 35)
         
         digestnames['pwllocation'] = [temppwl1_entry, temppwl2_entry, temppwl3_entry, temppwl4_entry]
@@ -1182,19 +1188,19 @@ if __name__ == '__main__':
         temppwl4_entry = tk.Entry()
         temppwl5_entry = tk.Entry()
         conc1_entry= tk.Entry()
-        conc1_entry.insert(END, '0')
+        conc1_entry.insert(END, '75')
         conc1_entry.place(relx=0.6,rely=0.3,width = 35)
         conc2_entry = tk.Entry()
-        conc2_entry.insert(END, '0')
+        conc2_entry.insert(END, '75')
         conc2_entry.place(relx=0.6,rely=0.35,width = 35)
         conc3_entry = tk.Entry()
-        conc3_entry.insert(END, '0')
+        conc3_entry.insert(END, '75')
         conc3_entry.place(relx=0.6,rely=0.4,width = 35)
         conc4_entry = tk.Entry()
-        conc4_entry.insert(END, '0')
+        conc4_entry.insert(END, '75')
         conc4_entry.place(relx=0.6,rely=0.45,width = 35)
         conc5_entry = tk.Entry()
-        conc5_entry.insert(END, '0')
+        conc5_entry.insert(END, '75')
         conc5_entry.place(relx=0.6,rely=0.5,width = 35)
 
         
@@ -1209,22 +1215,22 @@ if __name__ == '__main__':
         temppwl5_entry = tk.Entry()
         temppwl6_entry = tk.Entry()
         conc1_entry= tk.Entry()
-        conc1_entry.insert(END, '0')
+        conc1_entry.insert(END, '75')
         conc1_entry.place(relx=0.6,rely=0.3,width = 35)
         conc2_entry = tk.Entry()
-        conc2_entry.insert(END, '0')
+        conc2_entry.insert(END, '75')
         conc2_entry.place(relx=0.6,rely=0.35,width = 35)
         conc3_entry = tk.Entry()
-        conc3_entry.insert(END, '0')
+        conc3_entry.insert(END, '75')
         conc3_entry.place(relx=0.6,rely=0.4,width = 35)
         conc4_entry = tk.Entry()
-        conc4_entry.insert(END, '0')
+        conc4_entry.insert(END, '75')
         conc4_entry.place(relx=0.6,rely=0.45,width = 35)
         conc5_entry = tk.Entry()
-        conc5_entry.insert(END, '0')
+        conc5_entry.insert(END, '75')
         conc5_entry.place(relx=0.6,rely=0.5,width = 35)
         conc6_entry = tk.Entry()
-        conc6_entry.insert(END, '0')
+        conc6_entry.insert(END, '75')
         conc6_entry.place(relx=0.6,rely=0.55,width = 35)
         
         digestnames['pwllocation'] = [temppwl1_entry, temppwl2_entry, temppwl3_entry, temppwl4_entry, temppwl5_entry, temppwl6_entry]
@@ -3087,6 +3093,7 @@ if __name__ == '__main__':
         f.close()
     if __name__== "__main__":
         main()
+
     os.system("open reaction_setup.txt")
 
     from dilution_24_digests_writer import *
