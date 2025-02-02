@@ -214,7 +214,7 @@ def write_pcr():
 
                 f.write(
                     "    tc_mod.set_block_temperature(72, hold_time_minutes=5, block_max_volume=25) \r\n"
-                    "    tc_mod.set_block_temperature(4) \r\n"
+                    "    tc_mod.set_block_temperature(10) \r\n"
                     "    tc_mod.set_lid_temperature(temperature = 45) \r\n"
                     # "    protocol.pause('wait until ready to dispense assemblies') \r\n"
                     "    tc_mod.open_lid() \r\n"
@@ -228,7 +228,7 @@ def write_pcr():
             #water for digestion
             for i, row in pcr.iterrows():
                 f.write(
-                    "    protocol.comment('Adding H2O for DpnI digest of "+str(pcr.loc[j].at['Primary Template'])+" "+str(pcr.loc[j].at['tube'])+"') \r\n"
+                    "    protocol.comment('Adding H2O for DpnI digest of "+str(pcr.loc[i].at['Primary Template'])+" "+str(pcr.loc[i].at['tube'])+"') \r\n"
                     "    p20_pipette.pick_up_tip() \r\n"
                     "    p20_pipette.aspirate("+str(Input_values.loc[0].at['DPwater'])+", watertuberack['A1'], rate=2.0) \r\n"
                     "    p20_pipette.dispense("+str(Input_values.loc[0].at['DPwater'])+", pcrplate['"+str(pcr.loc[i].at['tube'])+"'], rate=2.0) \r\n"
@@ -238,7 +238,7 @@ def write_pcr():
             #cutsmart for digestion
             for i, row in pcr.iterrows():
                 f.write(
-                    "    protocol.comment('Adding rCustsmart buffer for DpnI digest of "+str(pcr.loc[j].at['Primary Template'])+" "+str(pcr.loc[j].at['tube'])+"') \r\n"
+                    "    protocol.comment('Adding rCustsmart buffer for DpnI digest of "+str(pcr.loc[i].at['Primary Template'])+" "+str(pcr.loc[i].at['tube'])+"') \r\n"
                     "    p20_pipette.pick_up_tip() \r\n"
                     "    p20_pipette.aspirate("+str(Input_values.loc[0].at['cutsmart'])+", cold_tuberack['D4'], rate=2.0) \r\n"
                     "    p20_pipette.dispense("+str(Input_values.loc[0].at['cutsmart'])+", pcrplate['"+str(pcr.loc[i].at['tube'])+"'], rate=2.0) \r\n"
@@ -249,7 +249,7 @@ def write_pcr():
             #Add DpnI
             for i, row in pcr.iterrows():
                 f.write(
-                    "    protocol.comment('Adding DpnI for digest of "+str(pcr.loc[j].at['Primary Template'])+" "+str(pcr.loc[j].at['tube'])+"') \r\n"
+                    "    protocol.comment('Adding DpnI for digest of "+str(pcr.loc[i].at['Primary Template'])+" "+str(pcr.loc[i].at['tube'])+"') \r\n"
                     "    p20_pipette.pick_up_tip() \r\n"
                     "    p20_pipette.aspirate("+str(Input_values.loc[0].at['DPNI'])+", cold_tuberack['D3'], rate=2.0) \r\n"
                     "    p20_pipette.dispense("+str(Input_values.loc[0].at['DPNI'])+", pcrplate['"+str(pcr.loc[i].at['tube'])+"'], rate=2.0) \r\n"
@@ -381,10 +381,21 @@ def write_pcr():
             #     "    p300_pipette.flow_rate.aspirate = 50 \r\n"
             #     "    p300_pipette.drop_tip() \r\n"
             # )
+            ####@@@@@@@@@@@
+            
+            ####@@@@@@@@@@@
+            processed_fragments = set()
 
             for i, row in GG_dfs.iterrows():
                 x = GG_dfs.loc[i].at['gg#']
-                for i, row in locals()[x].iterrows():  
+                for i, row in locals()[x].iterrows():
+                    frag_loc = locals()[x].loc[i].at['frag_loc']
+
+                    if frag_loc in processed_fragments:
+                        continue  # Skip if this fragment has already been processed
+
+                    processed_fragments.add(frag_loc)  # Mark this fragment as processed
+
                     if locals()[x].loc[i].at['initial required amount'] <1:
                         #adding h20
                         f.write("    protocol.comment('Diluting Golden Gate components "+str(locals()[x].loc[i].at['location_of_assembly'])+": Adding H2O') \r\n")
@@ -443,26 +454,6 @@ def write_pcr():
                                 "    p20_pipette.mix(3,"+str(locals()[x].loc[i].at['H20 to add to 1uL of fragment'])+",secondarydils['"+str(locals()[x].loc[i].at['frag_loc'])+"']) \r\n"
                                 "    p20_pipette.drop_tip() \r\n"
                             )
-                        
-                        # if locals()[x].loc[i].at['H20 to add to 1uL of fragment'] > 20:
-                        #     f.write(
-                        #         "    p20_pipette.pick_up_tip() \r\n"
-                        #         "    p20_pipette.mix(3,"+str(locals()[x].loc[i].at['H20 to add to 1uL of fragment'])+",secondarydils['"+str(locals()[x].loc[i].at['frag_loc'])+"']) \r\n"
-                        #         "    p20_pipette.drop_tip() \r\n"
-                        #     )
-                        # if locals()[x].loc[i].at['H20 to add to 1uL of fragment'] < 10:
-                        #     if locals()[x].loc[i].at['H20 to add to 1uL of fragment'] >5:
-                        #         f.write(
-                        #             "    p300_pipette.pick_up_tip() \r\n"
-                        #             "    p300_pipette.mix(3,"+str(locals()[x].loc[i].at['H20 to add to 1uL of fragment'])+",secondarydils['"+str(locals()[x].loc[i].at['frag_loc'])+"']) \r\n"
-                        #             "    p300_pipette.drop_tip() \r\n"
-                        #         )
-                        #     if locals()[x].loc[i].at['H20 to add to 1uL of fragment'] < 5:
-                        #         f.write(
-                        #             "    p300_pipette.pick_up_tip() \r\n"
-                        #             "    p300_pipette.mix(3,"+str(2*locals()[x].loc[i].at['H20 to add to 1uL of fragment'])+",secondarydils['"+str(locals()[x].loc[i].at['frag_loc'])+"']) \r\n"
-                        #             "    p300_pipette.drop_tip() \r\n"
-                        #         )
 
                     else:
                         f.write(
@@ -501,8 +492,8 @@ def write_pcr():
                     #water
                         "    protocol.comment('Combining Golden Gate components "+str(locals()[x].loc[i].at['location_of_assembly'])+": Adding H2O') \r\n"
                         "    p20_pipette.pick_up_tip() \r\n"
-                        "    p20_pipette.aspirate("+str(15 - round(locals()[x]['final amount to add'].sum(),2) - 1 - 1 - 1.65)+", watertuberack['A1']) \r\n" #accounts for activator
-                        "    p20_pipette.dispense("+str(15 - round(locals()[x]['final amount to add'].sum(),2) - 1 - 1 - 1.65)+", pcrplate['"+str(locals()[x].loc[0].at['location_of_assembly'])+"']) \r\n"
+                        "    p20_pipette.aspirate("+str(15 - round(locals()[x]['final amount to add'].sum(),2) - 1 - 1 - 1)+", watertuberack['A1']) \r\n" #accounts for activator
+                        "    p20_pipette.dispense("+str(15 - round(locals()[x]['final amount to add'].sum(),2) - 1 - 1 - 1)+", pcrplate['"+str(locals()[x].loc[0].at['location_of_assembly'])+"']) \r\n"
                         "    p20_pipette.blow_out() \r\n"
                         "    p20_pipette.drop_tip() \r\n"
                     )
@@ -513,8 +504,8 @@ def write_pcr():
                     #water
                         "    protocol.comment('Combining Golden Gate components "+str(locals()[x].loc[i].at['location_of_assembly'])+": Adding H2O') \r\n"
                         "    p20_pipette.pick_up_tip() \r\n"
-                        "    p20_pipette.aspirate("+str(15 - round(locals()[x]['final amount to add'].sum(),2) - 1 -1  - 1 - 1.65)+", watertuberack['A1']) \r\n" #accounts for activator
-                        "    p20_pipette.dispense("+str(15 - round(locals()[x]['final amount to add'].sum(),2) - 1 -1- 1 - 1.65)+", pcrplate['"+str(locals()[x].loc[0].at['location_of_assembly'])+"']) \r\n"
+                        "    p20_pipette.aspirate("+str(15 - round(locals()[x]['final amount to add'].sum(),2) - 1 -1  - 1 - 2)+", watertuberack['A1']) \r\n" #accounts for activator
+                        "    p20_pipette.dispense("+str(15 - round(locals()[x]['final amount to add'].sum(),2) - 1 -1- 1 - 2)+", pcrplate['"+str(locals()[x].loc[0].at['location_of_assembly'])+"']) \r\n"
                         "    p20_pipette.blow_out() \r\n"
                         "    p20_pipette.drop_tip() \r\n"
                     )
@@ -575,7 +566,7 @@ def write_pcr():
                 "    tc_mod.execute_profile(steps=profile, repetitions=25, block_max_volume=15) \r\n"
                 "    tc_mod.set_block_temperature(50, hold_time_minutes=5, block_max_volume=15) \r\n"
                 "    tc_mod.set_block_temperature(80, hold_time_minutes=5, block_max_volume=15) \r\n"
-                "    tc_mod.set_block_temperature(4) \r\n"
+                "    tc_mod.set_block_temperature(10) \r\n"
                 # "    protocol.pause('wait until ready to dispense assemblies') \r\n"
                 "    tc_mod.open_lid() \r\n"
                 "    protocol.comment('All done!') \r\n"
